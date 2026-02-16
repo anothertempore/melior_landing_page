@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
+/* === Melior Design Tokens === */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg: #F9F7F2;
+  --color-bg-light: #FDFCFA;
+  --color-text-primary: #212226;
+  --color-text-secondary: #918F8A;
+  --color-text-tertiary: #B5B2AC;
+  --color-border: #E6E0D6;
+  --color-surface: #F3EFE8;
+}
+
+.dark {
+  --color-bg: #141414;
+  --color-bg-light: #1C1C1C;
+  --color-text-primary: #F5F3EF;
+  --color-text-secondary: #8A8880;
+  --color-text-tertiary: #5A5850;
+  --color-border: #2A2926;
+  --color-surface: #1E1E1C;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text-primary);
+
+  --color-melior-bg: var(--color-bg);
+  --color-melior-bg-light: var(--color-bg-light);
+  --color-melior-text-primary: var(--color-text-primary);
+  --color-melior-text-secondary: var(--color-text-secondary);
+  --color-melior-text-tertiary: var(--color-text-tertiary);
+  --color-melior-border: var(--color-border);
+  --color-melior-surface: var(--color-surface);
+
+  --color-chapter-highlights: #B58C65;
+  --color-chapter-connections: #6B8F83;
+  --color-chapter-challenges: #8A7CA4;
+  --color-chapter-regrets: #9C8A63;
+  --color-chapter-lessons: #7A93AE;
+  --color-chapter-future: #B08A6D;
+
+  --font-serif: var(--font-lora), "Georgia", "Times New Roman", serif;
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --radius-card: 26px;
+  --radius-card-md: 24px;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.03);
+  --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 80px rgba(181, 140, 101, 0.08);
+
+  --animate-breathe: breathe 4.2s ease-in-out infinite;
+  --animate-fade-in: fadeIn 0.8s ease-out forwards;
+  --animate-fade-in-up: fadeInUp 0.8s ease-out forwards;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes breathe {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* === Base Styles === */
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* === Film grain texture === */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+.dark .grain::before {
+  opacity: 0.04;
+}
+
+/* === Selection color === */
+::selection {
+  background-color: #B58C6530;
+}
+
+/* === Reduced Motion === */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
