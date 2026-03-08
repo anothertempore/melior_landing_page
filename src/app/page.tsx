@@ -1,23 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useCallback, useState } from "react";
+import type { Lang, I18nText } from "@/lib/i18n";
+import { t, getSavedLang, saveLang } from "@/lib/i18n";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 const APPLE_ICON = (
-  <svg viewBox="0 0 24 24">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
   </svg>
 );
-
-type Lang = "zh" | "en";
-
-interface I18nText {
-  zh: string;
-  en: string;
-}
-
-function t(texts: I18nText, lang: Lang) {
-  return texts[lang];
-}
 
 const i18n = {
   heroTag: { zh: "把每一年，写成一本书。", en: "Write your year into a book." },
@@ -56,10 +49,7 @@ const i18n = {
   badge4: { zh: "iCloud 存储", en: "iCloud Only" },
   endingTitle: { zh: "今年的你，<br/>有什么想说的？", en: "What would you like<br/>to say this year?" },
   endingCta: { zh: "下载 Melior", en: "Download Melior" },
-  privacy: { zh: "隐私政策", en: "Privacy" },
-  about: { zh: "关于", en: "About" },
-  contact: { zh: "联系", en: "Contact" },
-};
+} satisfies Record<string, I18nText>;
 
 export default function Home() {
   const [lang, setLang] = useState<Lang>("zh");
@@ -74,7 +64,14 @@ export default function Home() {
 
   const switchLang = useCallback((l: Lang) => {
     setLang(l);
-    document.documentElement.lang = l === "zh" ? "zh-Hans" : "en";
+    saveLang(l);
+  }, []);
+
+  // Restore saved language preference
+  useEffect(() => {
+    const saved = getSavedLang();
+    setLang(saved);
+    document.documentElement.lang = saved === "zh" ? "zh-Hans" : "en";
   }, []);
 
   // Hero animation sequence
@@ -95,6 +92,11 @@ export default function Home() {
 
   // Scroll reveal
   useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mql.matches) {
+      document.querySelectorAll(".reveal").forEach((e) => e.classList.add("v"));
+      return;
+    }
     const ob = new IntersectionObserver(
       (entries) => {
         entries.forEach((x) => {
@@ -122,39 +124,20 @@ export default function Home() {
     return () => ob.disconnect();
   }, []);
 
-  // Scroll-responsive reading light
+  // Scroll-responsive reading light + light leak parallax (combined)
   useEffect(() => {
     const light = scrollLightRef.current;
-    if (!light) return;
-    let ticking = false;
-    function update() {
-      const scrollY = window.scrollY;
-      const docH = document.documentElement.scrollHeight - window.innerHeight;
-      const pct = docH > 0 ? scrollY / docH : 0;
-      const top = 10 + pct * 75;
-      light!.style.top = top + "vh";
-      ticking = false;
-    }
-    function onScroll() {
-      if (!ticking) {
-        requestAnimationFrame(update);
-        ticking = true;
-      }
-    }
-    window.addEventListener("scroll", onScroll);
-    update();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Light leak parallax
-  useEffect(() => {
     const leaks = document.querySelectorAll<HTMLElement>(".leak");
     const speeds = [0.04, 0.025, 0.035, 0.02];
+    if (!light) return;
     let ticking = false;
     function onScroll() {
       if (!ticking) {
         requestAnimationFrame(() => {
           const y = window.scrollY;
+          const docH = document.documentElement.scrollHeight - window.innerHeight;
+          const pct = docH > 0 ? y / docH : 0;
+          light!.style.top = 10 + pct * 75 + "vh";
           leaks.forEach((l, i) => {
             l.style.marginTop = -y * speeds[i] + "px";
           });
@@ -163,14 +146,15 @@ export default function Home() {
         ticking = true;
       }
     }
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <>
       {/* Mesh gradient */}
-      <div className="mesh">
+      <div className="mesh" aria-hidden="true">
         <div className="mesh-blob mesh-b1" />
         <div className="mesh-blob mesh-b2" />
         <div className="mesh-blob mesh-b3" />
@@ -179,183 +163,169 @@ export default function Home() {
       </div>
 
       {/* Light leaks */}
-      <div className="leaks-container">
+      <div className="leaks-container" aria-hidden="true">
         <div className="leak leak-1" />
         <div className="leak leak-2" />
         <div className="leak leak-3" />
         <div className="leak leak-4" />
       </div>
-      <div className="scroll-light" ref={scrollLightRef} />
+      <div className="scroll-light" ref={scrollLightRef} aria-hidden="true" />
 
-      {/* NAV */}
-      <nav className="nav" ref={navRef}>
-        <a className="nav-logo" href="#">Melior</a>
-        <div className="nav-right">
-          <button className={lang === "zh" ? "on" : ""} onClick={() => switchLang("zh")}>中</button>
-          <button className={lang === "en" ? "on" : ""} onClick={() => switchLang("en")}>EN</button>
-        </div>
-      </nav>
+      <Nav lang={lang} onLangChange={switchLang} navRef={navRef} />
 
-      {/* 1. HERO */}
-      <div className="hero">
-        <div className="hero-glow" />
-        <div className="hero-glow-2" />
-        <div className="hero-letters" ref={heroLettersRef}>
-          <span className="hero-l">M</span>
-          <span className="hero-l">e</span>
-          <span className="hero-l">l</span>
-          <span className="hero-l hero-l-i">i<span className="tittle" /></span>
-          <span className="hero-l">o</span>
-          <span className="hero-l">r</span>
-        </div>
-        <div className="hero-hl" ref={heroHlRef}><div className="hl" style={{ width: 60 }} /></div>
-        <p className="hero-tag" ref={heroTagRef}>{t(i18n.heroTag, lang)}</p>
-        <div className="hero-cta" ref={heroCtaRef}>
-          <a href="#" className="cta-btn cta-btn-ring">
-            {APPLE_ICON}
-            <span>{t(i18n.heroCta, lang)}</span>
-          </a>
-        </div>
-        <div className="hero-scroll" ref={heroScrollRef}>
-          <span className="hero-scroll-text">Scroll</span>
-          <span className="hero-scroll-arrow" />
-        </div>
-      </div>
-
-      {/* 2. SHOWCASE */}
-      <div className="showcase">
-        <div className="showcase-glow" />
-        <div className="showcase-glow-2" />
-        <div className="hl reveal" style={{ marginBottom: 56 }} />
-        <p className="showcase-line reveal">{t(i18n.showcaseLine, lang)}</p>
-        <div className="phones reveal rd1">
-          {/* Left phone — Chapter list */}
-          <div className="ph ph-2">
-            <div className="ph-scr"><div className="ph-notch" />
-              <div className="s-ch">
-                <div className="s-ch-t">{t(i18n.sChT, lang)}</div>
-                <div className="s-ch-s">Highlights</div>
-                <div className="s-qr"><span className="s-qd dn" /><span className="s-qt dn">{t(i18n.sQ1, lang)}</span></div>
-                <div className="s-qr"><span className="s-qd dn" /><span className="s-qt dn">{t(i18n.sQ2, lang)}</span></div>
-                <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t(i18n.sQ3, lang)}</span></div>
-                <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t(i18n.sQ4, lang)}</span></div>
-                <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t(i18n.sQ5, lang)}</span></div>
-              </div>
-            </div>
+      <main>
+        {/* 1. HERO */}
+        <section className="hero" aria-label={lang === "zh" ? "首页" : "Hero"}>
+          <div className="hero-glow" aria-hidden="true" />
+          <div className="hero-glow-2" aria-hidden="true" />
+          <div className="hero-letters" ref={heroLettersRef} aria-label="Melior">
+            <span className="hero-l" aria-hidden="true">M</span>
+            <span className="hero-l" aria-hidden="true">e</span>
+            <span className="hero-l" aria-hidden="true">l</span>
+            <span className="hero-l hero-l-i" aria-hidden="true">i<span className="tittle" /></span>
+            <span className="hero-l" aria-hidden="true">o</span>
+            <span className="hero-l" aria-hidden="true">r</span>
           </div>
-          {/* Center phone — Home */}
-          <div className="ph ph-0">
-            <div className="ph-scr"><div className="ph-notch" />
-              <div className="s-home">
-                <div className="s-ink s-ink-1" />
-                <div className="s-ink s-ink-2" />
-                <div className="s-yr">2025</div>
-                <div className="s-sub" dangerouslySetInnerHTML={{ __html: t(i18n.sSub, lang) }} />
-                <div className="s-card">
-                  <div className="s-lbl">{t(i18n.sLbl1, lang)}</div>
-                  <div className="s-q">{t(i18n.sCardQ1, lang)}</div>
-                  <div className="s-h">{t(i18n.sHint, lang)}</div>
-                </div>
-                <div className="s-card s-card-2">
-                  <div className="s-lbl" style={{ color: "var(--ch2)" }}>{t(i18n.sLbl2, lang)}</div>
-                  <div className="s-q">{t(i18n.sCardQ2, lang)}</div>
-                  <div className="s-h">{t(i18n.sHint, lang)}</div>
+          <div className="hero-hl" ref={heroHlRef}><div className="hl" style={{ width: 60 }} /></div>
+          <p className="hero-tag" ref={heroTagRef}>{t(i18n.heroTag, lang)}</p>
+          <div className="hero-cta" ref={heroCtaRef}>
+            <a href="#" className="cta-btn cta-btn-ring">
+              {APPLE_ICON}
+              <span>{t(i18n.heroCta, lang)}</span>
+            </a>
+          </div>
+          <div className="hero-scroll" ref={heroScrollRef} aria-hidden="true">
+            <span className="hero-scroll-text">Scroll</span>
+            <span className="hero-scroll-arrow" />
+          </div>
+        </section>
+
+        {/* 2. SHOWCASE */}
+        <section className="showcase" aria-label={lang === "zh" ? "产品展示" : "Showcase"}>
+          <div className="showcase-glow" aria-hidden="true" />
+          <div className="showcase-glow-2" aria-hidden="true" />
+          <div className="hl reveal mb-14" />
+          <p className="showcase-line reveal">{t(i18n.showcaseLine, lang)}</p>
+          <div className="phones reveal rd1" aria-hidden="true">
+            {/* Left phone — Chapter list */}
+            <div className="ph ph-2">
+              <div className="ph-scr"><div className="ph-notch" />
+                <div className="s-ch">
+                  <div className="s-ch-t">{t(i18n.sChT, lang)}</div>
+                  <div className="s-ch-s">Highlights</div>
+                  <div className="s-qr"><span className="s-qd dn" /><span className="s-qt dn">{t(i18n.sQ1, lang)}</span></div>
+                  <div className="s-qr"><span className="s-qd dn" /><span className="s-qt dn">{t(i18n.sQ2, lang)}</span></div>
+                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t(i18n.sQ3, lang)}</span></div>
+                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t(i18n.sQ4, lang)}</span></div>
+                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t(i18n.sQ5, lang)}</span></div>
                 </div>
               </div>
             </div>
-          </div>
-          {/* Right phone — Summary */}
-          <div className="ph ph-1">
-            <div className="ph-scr"><div className="ph-notch" />
-              <div className="s-sum">
-                <div className="s-sum-yr">2025</div>
-                <div className="s-sum-lbl">{t(i18n.sSumLbl, lang)}</div>
-                <div className="s-sum-ln" />
-                <div className="s-sum-ch">{t(i18n.sSumCh1, lang)}</div>
-                <div className="s-sum-a">{t(i18n.sSumA1, lang)}</div>
-                <div className="s-sum-ln" />
-                <div className="s-sum-ch" style={{ color: "var(--ch2)" }}>{t(i18n.sSumCh2, lang)}</div>
-                <div className="s-sum-a">{t(i18n.sSumA2, lang)}</div>
-                <div className="s-sum-ln" />
-                <div className="s-sum-ch" style={{ color: "var(--ch3)" }}>{t(i18n.sSumCh3, lang)}</div>
-                <div className="s-sum-a">{t(i18n.sSumA3, lang)}</div>
+            {/* Center phone — Home */}
+            <div className="ph ph-0">
+              <div className="ph-scr"><div className="ph-notch" />
+                <div className="s-home">
+                  <div className="s-ink s-ink-1" />
+                  <div className="s-ink s-ink-2" />
+                  <div className="s-yr">2025</div>
+                  <div className="s-sub" dangerouslySetInnerHTML={{ __html: t(i18n.sSub, lang) }} />
+                  <div className="s-card">
+                    <div className="s-lbl">{t(i18n.sLbl1, lang)}</div>
+                    <div className="s-q">{t(i18n.sCardQ1, lang)}</div>
+                    <div className="s-h">{t(i18n.sHint, lang)}</div>
+                  </div>
+                  <div className="s-card s-card-2">
+                    <div className="s-lbl" style={{ color: "var(--ch2)" }}>{t(i18n.sLbl2, lang)}</div>
+                    <div className="s-q">{t(i18n.sCardQ2, lang)}</div>
+                    <div className="s-h">{t(i18n.sHint, lang)}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Right phone — Summary */}
+            <div className="ph ph-1">
+              <div className="ph-scr"><div className="ph-notch" />
+                <div className="s-sum">
+                  <div className="s-sum-yr">2025</div>
+                  <div className="s-sum-lbl">{t(i18n.sSumLbl, lang)}</div>
+                  <div className="s-sum-ln" />
+                  <div className="s-sum-ch">{t(i18n.sSumCh1, lang)}</div>
+                  <div className="s-sum-a">{t(i18n.sSumA1, lang)}</div>
+                  <div className="s-sum-ln" />
+                  <div className="s-sum-ch" style={{ color: "var(--ch2)" }}>{t(i18n.sSumCh2, lang)}</div>
+                  <div className="s-sum-a">{t(i18n.sSumA2, lang)}</div>
+                  <div className="s-sum-ln" />
+                  <div className="s-sum-ch" style={{ color: "var(--ch3)" }}>{t(i18n.sSumCh3, lang)}</div>
+                  <div className="s-sum-a">{t(i18n.sSumA3, lang)}</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <p className="chapters-line reveal rd2">{t(i18n.chaptersLine, lang)}</p>
-      </div>
+          <p className="chapters-line reveal rd2">{t(i18n.chaptersLine, lang)}</p>
+        </section>
 
-      {/* 3. PULL QUOTE */}
-      <div className="pullquote">
-        <div className="pq-mark reveal">&ldquo;</div>
-        <div className="pq-text reveal rd1" dangerouslySetInnerHTML={{ __html: t(i18n.pqText, lang) }} />
-        <div className="pq-chapter reveal rd2">{t(i18n.pqChapter, lang)}</div>
-      </div>
+        {/* 3. PULL QUOTE */}
+        <section className="pullquote" aria-label={lang === "zh" ? "引言" : "Quote"}>
+          <div className="pq-mark reveal" aria-hidden="true">&ldquo;</div>
+          <div className="pq-text reveal rd1" dangerouslySetInnerHTML={{ __html: t(i18n.pqText, lang) }} />
+          <div className="pq-chapter reveal rd2">{t(i18n.pqChapter, lang)}</div>
+        </section>
 
-      {/* 4. YEAR-OVER-YEAR */}
-      <div className="yoy" id="yoy" ref={yoyRef}>
-        <div className="yoy-glow" />
-        <div className="yoy-glow-2" />
-        <div className="yoy-in">
-          <div className="hl hl-dark reveal" style={{ marginBottom: 40 }} />
-          <div className="yoy-q reveal" dangerouslySetInnerHTML={{ __html: t(i18n.yoyQ, lang) }} />
-          <div className="yoy-cards-wrap reveal">
-            <div className="yoy-cards">
-              <div className="yoy-card">
-                <div className="yoy-card-year">2024</div>
-                <div className="yoy-card-rule" />
-                <div className="yoy-card-text">{t(i18n.yoy2024, lang)}</div>
-              </div>
-              <div className="yoy-card">
-                <div className="yoy-card-year">2025</div>
-                <div className="yoy-card-rule" />
-                <div className="yoy-card-text">{t(i18n.yoy2025, lang)}</div>
-              </div>
-              <div className="yoy-card">
-                <div className="yoy-card-year">2026</div>
-                <div className="yoy-card-rule" />
-                <div className="yoy-card-text">{t(i18n.yoy2026, lang)}</div>
-              </div>
-              <div className="yoy-card">
-                <div className="yoy-card-year" style={{ color: "var(--dark-muted)" }}>2027</div>
-                <div className="yoy-card-rule" style={{ opacity: 0.15 }} />
-                <div className="yoy-pending">{t(i18n.yoyPending, lang)}</div>
+        {/* 4. YEAR-OVER-YEAR */}
+        <section className="yoy" id="yoy" ref={yoyRef} aria-label={lang === "zh" ? "年度回顾" : "Year over Year"}>
+          <div className="yoy-glow" aria-hidden="true" />
+          <div className="yoy-glow-2" aria-hidden="true" />
+          <div className="yoy-in">
+            <div className="hl hl-dark reveal mb-10" />
+            <div className="yoy-q reveal" dangerouslySetInnerHTML={{ __html: t(i18n.yoyQ, lang) }} />
+            <div className="yoy-cards-wrap reveal">
+              <div className="yoy-cards">
+                <div className="yoy-card">
+                  <div className="yoy-card-year">2024</div>
+                  <div className="yoy-card-rule" />
+                  <div className="yoy-card-text">{t(i18n.yoy2024, lang)}</div>
+                </div>
+                <div className="yoy-card">
+                  <div className="yoy-card-year">2025</div>
+                  <div className="yoy-card-rule" />
+                  <div className="yoy-card-text">{t(i18n.yoy2025, lang)}</div>
+                </div>
+                <div className="yoy-card">
+                  <div className="yoy-card-year">2026</div>
+                  <div className="yoy-card-rule" />
+                  <div className="yoy-card-text">{t(i18n.yoy2026, lang)}</div>
+                </div>
+                <div className="yoy-card">
+                  <div className="yoy-card-year" style={{ color: "var(--dark-muted)" }}>2027</div>
+                  <div className="yoy-card-rule" style={{ opacity: 0.15 }} />
+                  <div className="yoy-pending">{t(i18n.yoyPending, lang)}</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* 5. ENDING */}
-      <div className="ending">
-        <div className="ending-glow" />
-        <div className="ending-badges reveal">
-          <span className="ending-badge">{t(i18n.badge1, lang)}</span>
-          <span className="ending-badge">{t(i18n.badge2, lang)}</span>
-          <span className="ending-badge">{t(i18n.badge3, lang)}</span>
-          <span className="ending-badge">{t(i18n.badge4, lang)}</span>
-        </div>
-        <div className="hl reveal" style={{ marginBottom: 56 }} />
-        <h2 className="ending-title reveal" dangerouslySetInnerHTML={{ __html: t(i18n.endingTitle, lang) }} />
-        <div className="ending-cta-wrap reveal" style={{ marginTop: 40 }}>
-          <a href="#" className="cta-btn">
-            {APPLE_ICON}
-            <span>{t(i18n.endingCta, lang)}</span>
-          </a>
-        </div>
-      </div>
+        {/* 5. ENDING */}
+        <section className="ending" aria-label={lang === "zh" ? "下载" : "Download"}>
+          <div className="ending-glow" aria-hidden="true" />
+          <div className="flex justify-center gap-7 mb-16 flex-wrap relative z-1 reveal">
+            <span className="ending-badge">{t(i18n.badge1, lang)}</span>
+            <span className="ending-badge">{t(i18n.badge2, lang)}</span>
+            <span className="ending-badge">{t(i18n.badge3, lang)}</span>
+            <span className="ending-badge">{t(i18n.badge4, lang)}</span>
+          </div>
+          <div className="hl reveal mb-14" />
+          <h2 className="ending-title reveal" dangerouslySetInnerHTML={{ __html: t(i18n.endingTitle, lang) }} />
+          <div className="relative z-1 mt-10 reveal">
+            <a href="#" className="cta-btn">
+              {APPLE_ICON}
+              <span>{t(i18n.endingCta, lang)}</span>
+            </a>
+          </div>
+        </section>
+      </main>
 
-      {/* Footer */}
-      <footer className="foot">
-        <div className="foot-logo">Melior</div>
-        <div className="foot-links">
-          <a href="#">{t(i18n.privacy, lang)}</a>
-          <a href="#">{t(i18n.about, lang)}</a>
-          <a href="mailto:hello@kexin.li">{t(i18n.contact, lang)}</a>
-        </div>
-        <p className="foot-c">Made by <a href="https://kexin.li">Kexin</a></p>
-      </footer>
+      <Footer lang={lang} showLinks />
     </>
   );
 }

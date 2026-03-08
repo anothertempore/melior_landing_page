@@ -240,21 +240,10 @@ body::before{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;
 /* ====== 5. ENDING ====== */
 .ending-glow{position:absolute;bottom:15%;left:50%;transform:translateX(-50%);width:450px;height:250px;background:radial-gradient(ellipse,var(--gold-light),transparent 65%);opacity:.06;filter:blur(80px);pointer-events:none}
 .ending::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(184,150,90,.08),transparent);pointer-events:none}
-.ending-badges{display:flex;justify-content:center;gap:28px;margin-bottom:64px;flex-wrap:wrap;position:relative;z-index:1}
 .ending-badge{font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:500;letter-spacing:.22em;color:var(--faint);position:relative;padding-bottom:8px}
 .ending-badge::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:16px;height:.5px;background:var(--gold-warm);opacity:.35}
 .ending-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,48px);font-weight:300;line-height:1.4;margin-bottom:16px;position:relative;z-index:1}
-.ending-cta-wrap{position:relative;z-index:1}
 
-/* Footer */
-.foot{padding:48px 32px 40px;text-align:center;border-top:1px solid var(--stroke);max-width:600px;margin:0 auto}
-.foot-logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;letter-spacing:.08em;color:var(--text)}
-.foot-links{display:flex;justify-content:center;gap:24px;margin-top:14px}
-.foot-links a{font-size:11px;font-weight:300;color:var(--faint);text-decoration:none;letter-spacing:.06em;transition:color .3s}
-.foot-links a:hover{color:var(--muted)}
-.foot-c{font-size:10px;color:var(--faint);margin-top:16px;font-weight:300}
-.foot-c a{color:var(--muted);text-decoration:none;border-bottom:.5px solid var(--stroke);transition:color .3s;padding-bottom:1px}
-.foot-c a:hover{color:var(--gold-warm)}
 
 /* ====== Chinese font override ====== */
 :lang(zh-Hans) .hero-tag,
@@ -290,4 +279,9 @@ body::before{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;
 @media(prefers-reduced-motion:reduce){
   .mesh-blob{animation:none!important}
   .cta-btn::after{animation:none!important}
+  .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  .hero-l{opacity:1!important;transform:none!important;transition:none!important}
+  .hero-hl,.hero-tag,.hero-cta,.hero-scroll{opacity:1!important;transition:none!important}
+  .hero-l-i .tittle{opacity:1!important;animation:none!important;transform:translateX(-50%) translateY(0)!important}
+  .leak{margin-top:0!important}
 }
