@@ -179,10 +179,12 @@ export default function Home() {
       </div>
 
       {/* Light leaks */}
-      <div className="leak leak-1" />
-      <div className="leak leak-2" />
-      <div className="leak leak-3" />
-      <div className="leak leak-4" />
+      <div className="leaks-container">
+        <div className="leak leak-1" />
+        <div className="leak leak-2" />
+        <div className="leak leak-3" />
+        <div className="leak leak-4" />
+      </div>
       <div className="scroll-light" ref={scrollLightRef} />
 
       {/* NAV */}

@@ -9,7 +9,7 @@
   --ch1:#E8D5B8; --ch2:#C2D4B4; --ch3:#C8B8D8; --ch5:#B0C0D4; --ch6:#D4A888;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{background:linear-gradient(180deg,var(--bg) 0%,#F6F2EB 50%,#F3EEE5 75%,var(--bg) 100%);color:var(--text);font-family:-apple-system,'PingFang SC','Helvetica Neue','Noto Sans SC',sans-serif;line-height:1.8;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body::after{content:'';position:fixed;inset:0;opacity:.022;pointer-events:none;z-index:9999;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
 body::before{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;z-index:9998;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");background-size:512px}
@@ -39,7 +39,8 @@ body::before{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;
 @keyframes m5{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(3vw,5vh) scale(.97)}66%{transform:translate(-4vw,-3vh) scale(1.05)}}
 
 /* ====== LIGHT LEAKS ====== */
-.leak{position:fixed;pointer-events:none;z-index:0;border-radius:50%}
+.leaks-container{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.leak{position:absolute;pointer-events:none;border-radius:50%}
 .leak-1{width:180px;height:500px;top:8%;left:-40px;background:radial-gradient(ellipse,rgba(210,185,140,.12),transparent 70%);filter:blur(40px);transform:rotate(-12deg)}
 .leak-2{width:140px;height:400px;top:35%;right:-30px;background:radial-gradient(ellipse,rgba(200,175,130,.10),transparent 70%);filter:blur(35px);transform:rotate(8deg)}
 .leak-3{width:200px;height:350px;top:60%;left:-50px;background:radial-gradient(ellipse,rgba(220,195,155,.08),transparent 70%);filter:blur(45px);transform:rotate(-5deg)}
