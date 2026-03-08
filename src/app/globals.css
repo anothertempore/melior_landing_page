@@ -67,8 +67,8 @@ body::before{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;
 .hl-dark{background:linear-gradient(90deg,transparent,var(--gold-light) 50%,transparent);opacity:.18}
 
 /* ====== NAV ====== */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:rgba(249,247,242,.65);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(230,224,214,.3);transition:all .3s}
-.nav.dk{background:rgba(30,29,27,.65);border-bottom-color:rgba(255,255,255,.04)}
+.nav{position:absolute;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:transparent;border-bottom:none;transition:color .3s}
+.nav.dk{color:var(--dark-text)}
 .nav-logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;letter-spacing:.08em;color:var(--text);text-decoration:none;transition:color .3s}
 .nav.dk .nav-logo{color:var(--dark-text)}
 .nav-right{display:flex;align-items:center;gap:4px}
