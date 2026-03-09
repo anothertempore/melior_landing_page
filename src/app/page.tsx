@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useCallback, useState } from "react";
-import type { Lang, I18nText } from "@/lib/i18n";
-import { t, getSavedLang, saveLang } from "@/lib/i18n";
+import { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
@@ -12,47 +11,8 @@ const APPLE_ICON = (
   </svg>
 );
 
-const i18n = {
-  heroTag: { zh: "把每一年，写成一本书。", en: "Write your year into a book." },
-  heroCta: { zh: "下载 Melior", en: "Download Melior" },
-  showcaseLine: { zh: "不是年终总结，是一本关于你自己的书。", en: "Not a year-end review — a book about you." },
-  chaptersLine: { zh: "30 个问题 · 6 个篇章", en: "30 Questions · 6 Chapters" },
-  sChT: { zh: "高光时刻", en: "Highlights" },
-  sQ1: { zh: "你今年去了哪些地方？", en: "Where did you go?" },
-  sQ2: { zh: "最开心的事是什么？", en: "Happiest moment?" },
-  sQ3: { zh: "最让你骄傲的事？", en: "Most proud of?" },
-  sQ4: { zh: "你沉迷于什么？", en: "Obsessed with?" },
-  sQ5: { zh: "哪张照片代表你的一年？", en: "Photo of the year?" },
-  sSub: { zh: "这一年快过完了<br/>有些事值得记下来", en: "The year is ending<br/>Some things worth keeping" },
-  sLbl1: { zh: "第一章 · 高光时刻", en: "Ch.1 · Highlights" },
-  sCardQ1: { zh: "最开心的事是什么？", en: "What was the happiest thing?" },
-  sHint: { zh: "✎ 轻触书写", en: "✎ Tap to write" },
-  sLbl2: { zh: "第二章 · 深度羁绊", en: "Ch.2 · Bonds" },
-  sCardQ2: { zh: "和谁在一起最自在？", en: "Who felt like home?" },
-  sSumLbl: { zh: "年度总结", en: "Summary" },
-  sSumCh1: { zh: "高光时刻", en: "Highlights" },
-  sSumA1: { zh: "去了大理，在洱海边住了一个星期...", en: "Went to Dali, stayed by the lake..." },
-  sSumCh2: { zh: "深度羁绊", en: "Bonds" },
-  sSumA2: { zh: "和小林。不用说话也不尴尬...", en: "Xiao Lin. Silence isn't awkward..." },
-  sSumCh3: { zh: "逆境重生", en: "Challenges" },
-  sSumA3: { zh: "三月到五月，怀疑自己选错了方向...", en: "March to May, doubting my path..." },
-  pqText: { zh: "那段时间，<br/>什么撑着你？", en: "What kept you<br/>going?" },
-  pqChapter: { zh: "逆境重生", en: "Resilience" },
-  yoyQ: { zh: "如果能回到年初，<br/>你想告诉自己什么？", en: "If you could go back to January,<br/>what would you tell yourself?" },
-  yoy2024: { zh: "别怕。你以为过不去的那些事，后来都过去了。", en: "Don\u2019t be afraid. Everything you thought you couldn\u2019t survive \u2014 you did." },
-  yoy2025: { zh: "少想一点，多做一点。你其实比自己以为的要勇敢。", en: "Think less, do more. You\u2019re braver than you think." },
-  yoy2026: { zh: "慢一点没关系。按自己的节奏走就好。", en: "It\u2019s okay to go slow. Your own pace is enough." },
-  yoyPending: { zh: "等你来写...", en: "Waiting for you..." },
-  badge1: { zh: "无账号", en: "No Account" },
-  badge2: { zh: "无广告", en: "No Ads" },
-  badge3: { zh: "无追踪", en: "No Tracking" },
-  badge4: { zh: "iCloud 存储", en: "iCloud Only" },
-  endingTitle: { zh: "今年的你，<br/>有什么想说的？", en: "What would you like<br/>to say this year?" },
-  endingCta: { zh: "下载 Melior", en: "Download Melior" },
-} satisfies Record<string, I18nText>;
-
 export default function Home() {
-  const [lang, setLang] = useState<Lang>("zh");
+  const t = useTranslations("home");
   const scrollLightRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const yoyRef = useRef<HTMLDivElement>(null);
@@ -61,18 +21,6 @@ export default function Home() {
   const heroTagRef = useRef<HTMLParagraphElement>(null);
   const heroCtaRef = useRef<HTMLDivElement>(null);
   const heroScrollRef = useRef<HTMLDivElement>(null);
-
-  const switchLang = useCallback((l: Lang) => {
-    setLang(l);
-    saveLang(l);
-  }, []);
-
-  // Restore saved language preference
-  useEffect(() => {
-    const saved = getSavedLang();
-    setLang(saved);
-    document.documentElement.lang = saved === "zh" ? "zh-Hans" : "en";
-  }, []);
 
   // Hero animation sequence
   useEffect(() => {
@@ -171,11 +119,11 @@ export default function Home() {
       </div>
       <div className="scroll-light" ref={scrollLightRef} aria-hidden="true" />
 
-      <Nav lang={lang} onLangChange={switchLang} navRef={navRef} />
+      <Nav navRef={navRef} />
 
       <main>
         {/* 1. HERO */}
-        <section className="hero" aria-label={lang === "zh" ? "首页" : "Hero"}>
+        <section className="hero" aria-label={t("ariaHero")}>
           <div className="hero-glow" aria-hidden="true" />
           <div className="hero-glow-2" aria-hidden="true" />
           <div className="hero-letters" ref={heroLettersRef} aria-label="Melior">
@@ -187,11 +135,11 @@ export default function Home() {
             <span className="hero-l" aria-hidden="true">r</span>
           </div>
           <div className="hero-hl" ref={heroHlRef}><div className="hl" style={{ width: 60 }} /></div>
-          <p className="hero-tag" ref={heroTagRef}>{t(i18n.heroTag, lang)}</p>
+          <p className="hero-tag" ref={heroTagRef}>{t("heroTag")}</p>
           <div className="hero-cta" ref={heroCtaRef}>
             <a href="#" className="cta-btn cta-btn-ring">
               {APPLE_ICON}
-              <span>{t(i18n.heroCta, lang)}</span>
+              <span>{t("heroCta")}</span>
             </a>
           </div>
           <div className="hero-scroll" ref={heroScrollRef} aria-hidden="true">
@@ -201,23 +149,23 @@ export default function Home() {
         </section>
 
         {/* 2. SHOWCASE */}
-        <section className="showcase" aria-label={lang === "zh" ? "产品展示" : "Showcase"}>
+        <section className="showcase" aria-label={t("ariaShowcase")}>
           <div className="showcase-glow" aria-hidden="true" />
           <div className="showcase-glow-2" aria-hidden="true" />
           <div className="hl reveal mb-14" />
-          <p className="showcase-line reveal">{t(i18n.showcaseLine, lang)}</p>
+          <p className="showcase-line reveal">{t("showcaseLine")}</p>
           <div className="phones reveal rd1" aria-hidden="true">
             {/* Left phone — Chapter list */}
             <div className="ph ph-2">
               <div className="ph-scr"><div className="ph-notch" />
                 <div className="s-ch">
-                  <div className="s-ch-t">{t(i18n.sChT, lang)}</div>
+                  <div className="s-ch-t">{t("sChT")}</div>
                   <div className="s-ch-s">Highlights</div>
-                  <div className="s-qr"><span className="s-qd dn" /><span className="s-qt dn">{t(i18n.sQ1, lang)}</span></div>
-                  <div className="s-qr"><span className="s-qd dn" /><span className="s-qt dn">{t(i18n.sQ2, lang)}</span></div>
-                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t(i18n.sQ3, lang)}</span></div>
-                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t(i18n.sQ4, lang)}</span></div>
-                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t(i18n.sQ5, lang)}</span></div>
+                  <div className="s-qr"><span className="s-qd dn" /><span className="s-qt dn">{t("sQ1")}</span></div>
+                  <div className="s-qr"><span className="s-qd dn" /><span className="s-qt dn">{t("sQ2")}</span></div>
+                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t("sQ3")}</span></div>
+                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t("sQ4")}</span></div>
+                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t("sQ5")}</span></div>
                 </div>
               </div>
             </div>
@@ -228,16 +176,16 @@ export default function Home() {
                   <div className="s-ink s-ink-1" />
                   <div className="s-ink s-ink-2" />
                   <div className="s-yr">2025</div>
-                  <div className="s-sub" dangerouslySetInnerHTML={{ __html: t(i18n.sSub, lang) }} />
+                  <div className="s-sub" dangerouslySetInnerHTML={{ __html: t.raw("sSub") }} />
                   <div className="s-card">
-                    <div className="s-lbl">{t(i18n.sLbl1, lang)}</div>
-                    <div className="s-q">{t(i18n.sCardQ1, lang)}</div>
-                    <div className="s-h">{t(i18n.sHint, lang)}</div>
+                    <div className="s-lbl">{t("sLbl1")}</div>
+                    <div className="s-q">{t("sCardQ1")}</div>
+                    <div className="s-h">{t("sHint")}</div>
                   </div>
                   <div className="s-card s-card-2">
-                    <div className="s-lbl" style={{ color: "var(--ch2)" }}>{t(i18n.sLbl2, lang)}</div>
-                    <div className="s-q">{t(i18n.sCardQ2, lang)}</div>
-                    <div className="s-h">{t(i18n.sHint, lang)}</div>
+                    <div className="s-lbl" style={{ color: "var(--ch2)" }}>{t("sLbl2")}</div>
+                    <div className="s-q">{t("sCardQ2")}</div>
+                    <div className="s-h">{t("sHint")}</div>
                   </div>
                 </div>
               </div>
@@ -247,58 +195,58 @@ export default function Home() {
               <div className="ph-scr"><div className="ph-notch" />
                 <div className="s-sum">
                   <div className="s-sum-yr">2025</div>
-                  <div className="s-sum-lbl">{t(i18n.sSumLbl, lang)}</div>
+                  <div className="s-sum-lbl">{t("sSumLbl")}</div>
                   <div className="s-sum-ln" />
-                  <div className="s-sum-ch">{t(i18n.sSumCh1, lang)}</div>
-                  <div className="s-sum-a">{t(i18n.sSumA1, lang)}</div>
+                  <div className="s-sum-ch">{t("sSumCh1")}</div>
+                  <div className="s-sum-a">{t("sSumA1")}</div>
                   <div className="s-sum-ln" />
-                  <div className="s-sum-ch" style={{ color: "var(--ch2)" }}>{t(i18n.sSumCh2, lang)}</div>
-                  <div className="s-sum-a">{t(i18n.sSumA2, lang)}</div>
+                  <div className="s-sum-ch" style={{ color: "var(--ch2)" }}>{t("sSumCh2")}</div>
+                  <div className="s-sum-a">{t("sSumA2")}</div>
                   <div className="s-sum-ln" />
-                  <div className="s-sum-ch" style={{ color: "var(--ch3)" }}>{t(i18n.sSumCh3, lang)}</div>
-                  <div className="s-sum-a">{t(i18n.sSumA3, lang)}</div>
+                  <div className="s-sum-ch" style={{ color: "var(--ch3)" }}>{t("sSumCh3")}</div>
+                  <div className="s-sum-a">{t("sSumA3")}</div>
                 </div>
               </div>
             </div>
           </div>
-          <p className="chapters-line reveal rd2">{t(i18n.chaptersLine, lang)}</p>
+          <p className="chapters-line reveal rd2">{t("chaptersLine")}</p>
         </section>
 
         {/* 3. PULL QUOTE */}
-        <section className="pullquote" aria-label={lang === "zh" ? "引言" : "Quote"}>
+        <section className="pullquote" aria-label={t("ariaQuote")}>
           <div className="pq-mark reveal" aria-hidden="true">&ldquo;</div>
-          <div className="pq-text reveal rd1" dangerouslySetInnerHTML={{ __html: t(i18n.pqText, lang) }} />
-          <div className="pq-chapter reveal rd2">{t(i18n.pqChapter, lang)}</div>
+          <div className="pq-text reveal rd1" dangerouslySetInnerHTML={{ __html: t.raw("pqText") }} />
+          <div className="pq-chapter reveal rd2">{t("pqChapter")}</div>
         </section>
 
         {/* 4. YEAR-OVER-YEAR */}
-        <section className="yoy" id="yoy" ref={yoyRef} aria-label={lang === "zh" ? "年度回顾" : "Year over Year"}>
+        <section className="yoy" id="yoy" ref={yoyRef} aria-label={t("ariaYoy")}>
           <div className="yoy-glow" aria-hidden="true" />
           <div className="yoy-glow-2" aria-hidden="true" />
           <div className="yoy-in">
             <div className="hl hl-dark reveal mb-10" />
-            <div className="yoy-q reveal" dangerouslySetInnerHTML={{ __html: t(i18n.yoyQ, lang) }} />
+            <div className="yoy-q reveal" dangerouslySetInnerHTML={{ __html: t.raw("yoyQ") }} />
             <div className="yoy-cards-wrap reveal">
               <div className="yoy-cards">
                 <div className="yoy-card">
                   <div className="yoy-card-year">2024</div>
                   <div className="yoy-card-rule" />
-                  <div className="yoy-card-text">{t(i18n.yoy2024, lang)}</div>
+                  <div className="yoy-card-text">{t("yoy2024")}</div>
                 </div>
                 <div className="yoy-card">
                   <div className="yoy-card-year">2025</div>
                   <div className="yoy-card-rule" />
-                  <div className="yoy-card-text">{t(i18n.yoy2025, lang)}</div>
+                  <div className="yoy-card-text">{t("yoy2025")}</div>
                 </div>
                 <div className="yoy-card">
                   <div className="yoy-card-year">2026</div>
                   <div className="yoy-card-rule" />
-                  <div className="yoy-card-text">{t(i18n.yoy2026, lang)}</div>
+                  <div className="yoy-card-text">{t("yoy2026")}</div>
                 </div>
                 <div className="yoy-card">
                   <div className="yoy-card-year" style={{ color: "var(--dark-muted)" }}>2027</div>
                   <div className="yoy-card-rule" style={{ opacity: 0.15 }} />
-                  <div className="yoy-pending">{t(i18n.yoyPending, lang)}</div>
+                  <div className="yoy-pending">{t("yoyPending")}</div>
                 </div>
               </div>
             </div>
@@ -306,26 +254,26 @@ export default function Home() {
         </section>
 
         {/* 5. ENDING */}
-        <section className="ending" aria-label={lang === "zh" ? "下载" : "Download"}>
+        <section className="ending" aria-label={t("ariaDownload")}>
           <div className="ending-glow" aria-hidden="true" />
           <div className="flex justify-center gap-7 mb-16 flex-wrap relative z-1 reveal">
-            <span className="ending-badge">{t(i18n.badge1, lang)}</span>
-            <span className="ending-badge">{t(i18n.badge2, lang)}</span>
-            <span className="ending-badge">{t(i18n.badge3, lang)}</span>
-            <span className="ending-badge">{t(i18n.badge4, lang)}</span>
+            <span className="ending-badge">{t("badge1")}</span>
+            <span className="ending-badge">{t("badge2")}</span>
+            <span className="ending-badge">{t("badge3")}</span>
+            <span className="ending-badge">{t("badge4")}</span>
           </div>
           <div className="hl reveal mb-14" />
-          <h2 className="ending-title reveal" dangerouslySetInnerHTML={{ __html: t(i18n.endingTitle, lang) }} />
+          <h2 className="ending-title reveal" dangerouslySetInnerHTML={{ __html: t.raw("endingTitle") }} />
           <div className="relative z-1 mt-10 reveal">
             <a href="#" className="cta-btn">
               {APPLE_ICON}
-              <span>{t(i18n.endingCta, lang)}</span>
+              <span>{t("endingCta")}</span>
             </a>
           </div>
         </section>
       </main>
 
-      <Footer lang={lang} showLinks />
+      <Footer showLinks />
     </>
   );
 }

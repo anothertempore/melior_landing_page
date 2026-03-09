@@ -1,32 +1,37 @@
 "use client";
 
 import Link from "next/link";
-import type { Lang } from "@/lib/i18n";
+import { useLocale } from "next-intl";
 
 interface NavProps {
-  lang: Lang;
-  onLangChange: (lang: Lang) => void;
   navRef?: React.RefObject<HTMLElement | null>;
 }
 
-export default function Nav({ lang, onLangChange, navRef }: NavProps) {
+export default function Nav({ navRef }: NavProps) {
+  const locale = useLocale();
+
+  function switchLang(newLocale: "zh" | "en") {
+    document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000;SameSite=Lax`;
+    window.location.reload();
+  }
+
   return (
     <nav className="nav" ref={navRef} aria-label="Main navigation">
       <Link className="nav-logo" href="/">Melior</Link>
       <div className="nav-right" role="group" aria-label="Language">
         <button
-          className={lang === "zh" ? "on" : ""}
-          onClick={() => onLangChange("zh")}
+          className={locale === "zh" ? "on" : ""}
+          onClick={() => switchLang("zh")}
           aria-label="切换到中文"
-          aria-pressed={lang === "zh"}
+          aria-pressed={locale === "zh"}
         >
           中
         </button>
         <button
-          className={lang === "en" ? "on" : ""}
-          onClick={() => onLangChange("en")}
+          className={locale === "en" ? "on" : ""}
+          onClick={() => switchLang("en")}
           aria-label="Switch to English"
-          aria-pressed={lang === "en"}
+          aria-pressed={locale === "en"}
         >
           EN
         </button>

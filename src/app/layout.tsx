@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -12,16 +14,16 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Melior — 把每一年，写成一本书",
+  title: "Melior — Write your year into a book",
   description:
     "Melior is a year-end reflection app for iOS. 30 questions, 6 chapters — write your year into a book.",
   openGraph: {
-    title: "Melior — 把每一年，写成一本书",
+    title: "Melior — Write your year into a book",
     description:
       "Melior is a year-end reflection app for iOS. 30 questions, 6 chapters — write your year into a book.",
     type: "website",
-    locale: "zh_CN",
-    alternateLocale: "en_US",
+    locale: "en_US",
+    alternateLocale: "zh_CN",
   },
   twitter: {
     card: "summary_large_image",
@@ -35,15 +37,21 @@ export const viewport: Viewport = {
   themeColor: "#F9F7F2",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+  const htmlLang = locale === "zh" ? "zh-Hans" : "en";
+
   return (
-    <html lang="zh-Hans" className={cormorant.variable}>
+    <html lang={htmlLang} className={cormorant.variable}>
       <body>
-        {children}
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          {children}
+        </NextIntlClientProvider>
         <Analytics />
       </body>
     </html>
