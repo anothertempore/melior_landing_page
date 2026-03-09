@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -41,7 +42,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-Hans" className={cormorant.variable}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
