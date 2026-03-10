@@ -397,6 +397,34 @@ body::before{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;
   .prose-toc ol{columns:1}
 }
 
+/* ====== FAQ ACCORDION ====== */
+.faq-list{margin:0}
+.faq-item{border-bottom:.5px solid var(--stroke)}
+.faq-item:first-child{border-top:.5px solid var(--stroke)}
+.faq-q{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:20px 0;border:none;background:none;cursor:pointer;text-align:left;
+  font-size:15px;font-weight:400;color:var(--text);line-height:1.6;
+  transition:color .3s;
+}
+.faq-q:hover{color:var(--gold)}
+.faq-arrow{
+  width:8px;height:8px;flex-shrink:0;
+  border-right:1px solid var(--faint);border-bottom:1px solid var(--faint);
+  transform:rotate(45deg);
+  transition:transform .3s cubic-bezier(.22,1,.36,1);
+}
+.faq-arrow-open{transform:rotate(-135deg)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s cubic-bezier(.22,1,.36,1),padding .4s cubic-bezier(.22,1,.36,1);
+}
+.faq-a-open{max-height:300px;padding-bottom:20px}
+.faq-a p{
+  font-size:14px;line-height:1.9;color:var(--muted);margin:0;
+  padding-left:0;
+}
+
 /* Responsive */
 @media(max-width:700px){
   .ph-1,.ph-2{display:none}

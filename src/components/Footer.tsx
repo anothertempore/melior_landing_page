@@ -20,7 +20,7 @@ export default function Footer({ showLinks = false }: FooterProps) {
       {showLinks && (
         <div className="flex justify-center gap-8 mb-5">
           <a className={footLinkClass} href="/privacy">{t("privacy")}</a>
-          <a className={footLinkClass} href="#">{t("about")}</a>
+          <a className={footLinkClass} href="/support">{t("support")}</a>
           <a className={footLinkClass} href="mailto:xyzzy.baz@icloud.com">{t("contact")}</a>
         </div>
       )}
