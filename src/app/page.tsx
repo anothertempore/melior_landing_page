@@ -13,28 +13,22 @@ const APPLE_ICON = (
 
 export default function Home() {
   const t = useTranslations("home");
-  const scrollLightRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const yoyRef = useRef<HTMLDivElement>(null);
-  const heroLettersRef = useRef<HTMLDivElement>(null);
-  const heroHlRef = useRef<HTMLDivElement>(null);
+  const bookRef = useRef<HTMLDivElement>(null);
+  const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const heroTagRef = useRef<HTMLParagraphElement>(null);
   const heroCtaRef = useRef<HTMLDivElement>(null);
   const heroScrollRef = useRef<HTMLDivElement>(null);
 
-  // Hero animation sequence
+  // Hero animation — the book appears
   useEffect(() => {
-    const letters = heroLettersRef.current?.querySelectorAll(".hero-l");
-    if (!letters) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
-    letters.forEach((el, i) => {
-      timers.push(setTimeout(() => el.classList.add("on"), 500 + i * 130));
-    });
-    const d = 500 + 6 * 130 + 350;
-    timers.push(setTimeout(() => heroHlRef.current?.classList.add("on"), d));
-    timers.push(setTimeout(() => heroTagRef.current?.classList.add("on"), d + 150));
-    timers.push(setTimeout(() => heroCtaRef.current?.classList.add("on"), d + 750));
-    timers.push(setTimeout(() => heroScrollRef.current?.classList.add("on"), d + 1250));
+    timers.push(setTimeout(() => bookRef.current?.classList.add("on"), 300));
+    timers.push(setTimeout(() => heroTitleRef.current?.classList.add("on"), 1200));
+    timers.push(setTimeout(() => heroTagRef.current?.classList.add("on"), 1600));
+    timers.push(setTimeout(() => heroCtaRef.current?.classList.add("on"), 2200));
+    timers.push(setTimeout(() => heroScrollRef.current?.classList.add("on"), 2800));
     return () => timers.forEach(clearTimeout);
   }, []);
 
@@ -72,90 +66,53 @@ export default function Home() {
     return () => ob.disconnect();
   }, []);
 
-  // Scroll-responsive reading light + light leak parallax (combined)
-  useEffect(() => {
-    const light = scrollLightRef.current;
-    const leaks = document.querySelectorAll<HTMLElement>(".leak");
-    const speeds = [0.04, 0.025, 0.035, 0.02];
-    if (!light) return;
-    let ticking = false;
-    function onScroll() {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const y = window.scrollY;
-          const docH = document.documentElement.scrollHeight - window.innerHeight;
-          const pct = docH > 0 ? y / docH : 0;
-          light!.style.top = 10 + pct * 75 + "vh";
-          leaks.forEach((l, i) => {
-            l.style.marginTop = -y * speeds[i] + "px";
-          });
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <>
-      {/* Mesh gradient */}
-      <div className="mesh" aria-hidden="true">
-        <div className="mesh-blob mesh-b1" />
-        <div className="mesh-blob mesh-b2" />
-        <div className="mesh-blob mesh-b3" />
-        <div className="mesh-blob mesh-b4" />
-        <div className="mesh-blob mesh-b5" />
-      </div>
-
-      {/* Light leaks */}
-      <div className="leaks-container" aria-hidden="true">
-        <div className="leak leak-1" />
-        <div className="leak leak-2" />
-        <div className="leak leak-3" />
-        <div className="leak leak-4" />
-      </div>
-      <div className="scroll-light" ref={scrollLightRef} aria-hidden="true" />
+      <div className="ambient" aria-hidden="true" />
 
       <Nav navRef={navRef} />
 
       <main>
-        {/* 1. HERO */}
+        {/* ── 1. HERO — The Book ── */}
         <section className="hero" aria-label={t("ariaHero")}>
-          <div className="hero-glow" aria-hidden="true" />
-          <div className="hero-glow-2" aria-hidden="true" />
-          <div className="hero-letters" ref={heroLettersRef} aria-label="Melior">
-            <span className="hero-l" aria-hidden="true">M</span>
-            <span className="hero-l" aria-hidden="true">e</span>
-            <span className="hero-l" aria-hidden="true">l</span>
-            <span className="hero-l hero-l-i" aria-hidden="true">i<span className="tittle" /></span>
-            <span className="hero-l" aria-hidden="true">o</span>
-            <span className="hero-l" aria-hidden="true">r</span>
+          <div className="book" ref={bookRef} aria-hidden="true">
+            <div className="book-cover">
+              <div className="book-spine" />
+              <div className="book-inner">
+                <span className="book-year">2025</span>
+                <span className="book-rule" />
+                <span className="book-brand">Melior</span>
+              </div>
+              <div className="book-ribbon" />
+            </div>
+            <div className="book-pages" />
+            <div className="book-shadow" />
           </div>
-          <div className="hero-hl" ref={heroHlRef}><div className="hl" style={{ width: 60 }} /></div>
+
+          <h1 className="hero-title" ref={heroTitleRef}>Melior</h1>
           <p className="hero-tag" ref={heroTagRef}>{t("heroTag")}</p>
+
           <div className="hero-cta" ref={heroCtaRef}>
             <a href="#" className="cta-btn cta-btn-ring">
               {APPLE_ICON}
               <span>{t("heroCta")}</span>
             </a>
           </div>
+
           <div className="hero-scroll" ref={heroScrollRef} aria-hidden="true">
             <span className="hero-scroll-text">Scroll</span>
             <span className="hero-scroll-arrow" />
           </div>
         </section>
 
-        {/* 2. SHOWCASE */}
+        {/* ── 2. SHOWCASE — Inside the Book ── */}
         <section className="showcase" aria-label={t("ariaShowcase")}>
-          <div className="showcase-glow" aria-hidden="true" />
-          <div className="showcase-glow-2" aria-hidden="true" />
-          <div className="hl reveal mb-14" />
+          <div className="hl reveal" />
+          <h2 className="section-title reveal">{t("showcaseTitle")}</h2>
           <p className="showcase-line reveal">{t("showcaseLine")}</p>
+
           <div className="phones reveal rd1" aria-hidden="true">
-            {/* Left phone — Chapter list */}
+            {/* Left — Chapter list */}
             <div className="ph ph-2">
               <div className="ph-scr"><div className="ph-notch" />
                 <div className="s-ch">
@@ -169,7 +126,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            {/* Center phone — Home */}
+            {/* Center — Home */}
             <div className="ph ph-0">
               <div className="ph-scr"><div className="ph-notch" />
                 <div className="s-home">
@@ -190,7 +147,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            {/* Right phone — Summary */}
+            {/* Right — Summary */}
             <div className="ph ph-1">
               <div className="ph-scr"><div className="ph-notch" />
                 <div className="s-sum">
@@ -209,62 +166,131 @@ export default function Home() {
               </div>
             </div>
           </div>
+
           <p className="chapters-line reveal rd2">{t("chaptersLine")}</p>
         </section>
 
-        {/* 3. PULL QUOTE */}
-        <section className="pullquote" aria-label={t("ariaQuote")}>
-          <div className="pq-mark reveal" aria-hidden="true">&ldquo;</div>
-          <div className="pq-text reveal rd1" dangerouslySetInnerHTML={{ __html: t.raw("pqText") }} />
-          <div className="pq-chapter reveal rd2">{t("pqChapter")}</div>
-        </section>
-
-        {/* 4. YEAR-OVER-YEAR */}
-        <section className="yoy" id="yoy" ref={yoyRef} aria-label={t("ariaYoy")}>
-          <div className="yoy-glow" aria-hidden="true" />
-          <div className="yoy-glow-2" aria-hidden="true" />
-          <div className="yoy-in">
-            <div className="hl hl-dark reveal mb-10" />
-            <div className="yoy-q reveal" dangerouslySetInnerHTML={{ __html: t.raw("yoyQ") }} />
-            <div className="yoy-cards-wrap reveal">
-              <div className="yoy-cards">
-                <div className="yoy-card">
-                  <div className="yoy-card-year">2024</div>
-                  <div className="yoy-card-rule" />
-                  <div className="yoy-card-text">{t("yoy2024")}</div>
-                </div>
-                <div className="yoy-card">
-                  <div className="yoy-card-year">2025</div>
-                  <div className="yoy-card-rule" />
-                  <div className="yoy-card-text">{t("yoy2025")}</div>
-                </div>
-                <div className="yoy-card">
-                  <div className="yoy-card-year">2026</div>
-                  <div className="yoy-card-rule" />
-                  <div className="yoy-card-text">{t("yoy2026")}</div>
-                </div>
-                <div className="yoy-card">
-                  <div className="yoy-card-year" style={{ color: "var(--dark-muted)" }}>2027</div>
-                  <div className="yoy-card-rule" style={{ opacity: 0.15 }} />
-                  <div className="yoy-pending">{t("yoyPending")}</div>
-                </div>
+        {/* ── 3. TABLE OF CONTENTS — 6 Chapters ── */}
+        <section className="toc-section" aria-label={t("ariaChapters")}>
+          <div className="toc-page reveal">
+            <div className="toc-title">{t("tocTitle")}</div>
+            <div className="toc-list">
+              <div className="toc-row reveal">
+                <span className="toc-num">一</span>
+                <span className="toc-name toc-c1">{t("ch1Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch1Q")}</span>
+              </div>
+              <div className="toc-row reveal rd1">
+                <span className="toc-num">二</span>
+                <span className="toc-name toc-c2">{t("ch2Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch2Q")}</span>
+              </div>
+              <div className="toc-row reveal rd1">
+                <span className="toc-num">三</span>
+                <span className="toc-name toc-c3">{t("ch3Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch3Q")}</span>
+              </div>
+              <div className="toc-row reveal rd2">
+                <span className="toc-num">四</span>
+                <span className="toc-name toc-c4">{t("ch4Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch4Q")}</span>
+              </div>
+              <div className="toc-row reveal rd2">
+                <span className="toc-num">五</span>
+                <span className="toc-name toc-c5">{t("ch5Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch5Q")}</span>
+              </div>
+              <div className="toc-row reveal rd3">
+                <span className="toc-num">六</span>
+                <span className="toc-name toc-c6">{t("ch6Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch6Q")}</span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 5. ENDING */}
-        <section className="ending" aria-label={t("ariaDownload")}>
-          <div className="ending-glow" aria-hidden="true" />
-          <div className="flex justify-center gap-7 mb-16 flex-wrap relative z-1 reveal">
-            <span className="ending-badge">{t("badge1")}</span>
-            <span className="ending-badge">{t("badge2")}</span>
-            <span className="ending-badge">{t("badge3")}</span>
-            <span className="ending-badge">{t("badge4")}</span>
+        {/* ── 4. BOOKSHELF — Year over Year ── */}
+        <section className="yoy" id="yoy" ref={yoyRef} aria-label={t("ariaYoy")}>
+          <div className="yoy-in">
+            <h2 className="section-title section-title-dk reveal">{t("yoyTitle")}</h2>
+            <p className="section-sub section-sub-dk reveal">{t("yoySub")}</p>
+
+            {/* Shelf with book spines */}
+            <div className="shelf reveal" aria-hidden="true">
+              <div className="shelf-book shelf-b1"><span>2024</span></div>
+              <div className="shelf-book shelf-b2"><span>2025</span></div>
+              <div className="shelf-book shelf-b3"><span>2026</span></div>
+              <div className="shelf-book shelf-b4"><span>2027</span></div>
+              <div className="shelf-board" />
+            </div>
+
+            <div className="yoy-q reveal" dangerouslySetInnerHTML={{ __html: t.raw("yoyQ") }} />
+
+            <div className="yoy-cards reveal">
+              <div className="yoy-card">
+                <div className="yoy-card-year">2024</div>
+                <div className="yoy-card-rule" />
+                <div className="yoy-card-text">{t("yoy2024")}</div>
+              </div>
+              <div className="yoy-card">
+                <div className="yoy-card-year">2025</div>
+                <div className="yoy-card-rule" />
+                <div className="yoy-card-text">{t("yoy2025")}</div>
+              </div>
+              <div className="yoy-card">
+                <div className="yoy-card-year">2026</div>
+                <div className="yoy-card-rule" />
+                <div className="yoy-card-text">{t("yoy2026")}</div>
+              </div>
+              <div className="yoy-card yoy-card-pending">
+                <div className="yoy-card-year">2027</div>
+                <div className="yoy-card-rule" />
+                <div className="yoy-pending">{t("yoyPending")}</div>
+              </div>
+            </div>
           </div>
-          <div className="hl reveal mb-14" />
+        </section>
+
+        {/* ── 5. PROMISE — Privacy principles ── */}
+        <section className="promise-wrap">
+        <div className="promise">
+          <h2 className="section-title reveal">{t("promiseTitle")}</h2>
+          <p className="section-sub reveal">{t("promiseSub")}</p>
+          <div className="promise-grid">
+            <div className="promise-item reveal">
+              <div className="promise-icon promise-icon-account" />
+              <div className="promise-label">{t("badge1")}</div>
+              <div className="promise-desc">{t("badge1Desc")}</div>
+            </div>
+            <div className="promise-item reveal rd1">
+              <div className="promise-icon promise-icon-ads" />
+              <div className="promise-label">{t("badge2")}</div>
+              <div className="promise-desc">{t("badge2Desc")}</div>
+            </div>
+            <div className="promise-item reveal rd2">
+              <div className="promise-icon promise-icon-tracking" />
+              <div className="promise-label">{t("badge3")}</div>
+              <div className="promise-desc">{t("badge3Desc")}</div>
+            </div>
+            <div className="promise-item reveal rd3">
+              <div className="promise-icon promise-icon-cloud" />
+              <div className="promise-label">{t("badge4")}</div>
+              <div className="promise-desc">{t("badge4Desc")}</div>
+            </div>
+          </div>
+        </div>
+        </section>
+
+        {/* ── 6. ENDING ── */}
+        <section className="ending" aria-label={t("ariaDownload")}>
           <h2 className="ending-title reveal" dangerouslySetInnerHTML={{ __html: t.raw("endingTitle") }} />
-          <div className="relative z-1 mt-10 reveal">
+          <div className="ending-cta reveal">
             <a href="#" className="cta-btn">
               {APPLE_ICON}
               <span>{t("endingCta")}</span>
