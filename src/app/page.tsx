@@ -108,6 +108,7 @@ export default function Home() {
         {/* ── 2. SHOWCASE — Inside the Book ── */}
         <section className="showcase" aria-label={t("ariaShowcase")}>
           <div className="hl reveal" />
+          <h2 className="section-title reveal">{t("showcaseTitle")}</h2>
           <p className="showcase-line reveal">{t("showcaseLine")}</p>
 
           <div className="phones reveal rd1" aria-hidden="true">
@@ -217,6 +218,9 @@ export default function Home() {
         {/* ── 4. BOOKSHELF — Year over Year ── */}
         <section className="yoy" id="yoy" ref={yoyRef} aria-label={t("ariaYoy")}>
           <div className="yoy-in">
+            <h2 className="section-title section-title-dk reveal">{t("yoyTitle")}</h2>
+            <p className="section-sub section-sub-dk reveal">{t("yoySub")}</p>
+
             {/* Shelf with book spines */}
             <div className="shelf reveal" aria-hidden="true">
               <div className="shelf-book shelf-b1"><span>2024</span></div>
@@ -255,6 +259,8 @@ export default function Home() {
 
         {/* ── 5. PROMISE — Privacy principles ── */}
         <section className="promise">
+          <h2 className="section-title reveal">{t("promiseTitle")}</h2>
+          <p className="section-sub reveal">{t("promiseSub")}</p>
           <div className="promise-grid">
             <div className="promise-item reveal">
               <div className="promise-icon promise-icon-account" />
