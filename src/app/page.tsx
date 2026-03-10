@@ -169,11 +169,49 @@ export default function Home() {
           <p className="chapters-line reveal rd2">{t("chaptersLine")}</p>
         </section>
 
-        {/* ── 3. PULL QUOTE — One page, one question ── */}
-        <section className="pullquote" aria-label={t("ariaQuote")}>
-          <div className="pq-mark reveal" aria-hidden="true">&ldquo;</div>
-          <div className="pq-text reveal rd1" dangerouslySetInnerHTML={{ __html: t.raw("pqText") }} />
-          <div className="pq-chapter reveal rd2">{t("pqChapter")}</div>
+        {/* ── 3. TABLE OF CONTENTS — 6 Chapters ── */}
+        <section className="toc-section" aria-label={t("ariaChapters")}>
+          <div className="toc-page reveal">
+            <div className="toc-title">{t("tocTitle")}</div>
+            <div className="toc-list">
+              <div className="toc-row reveal">
+                <span className="toc-num">一</span>
+                <span className="toc-name toc-c1">{t("ch1Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch1Q")}</span>
+              </div>
+              <div className="toc-row reveal rd1">
+                <span className="toc-num">二</span>
+                <span className="toc-name toc-c2">{t("ch2Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch2Q")}</span>
+              </div>
+              <div className="toc-row reveal rd1">
+                <span className="toc-num">三</span>
+                <span className="toc-name toc-c3">{t("ch3Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch3Q")}</span>
+              </div>
+              <div className="toc-row reveal rd2">
+                <span className="toc-num">四</span>
+                <span className="toc-name toc-c4">{t("ch4Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch4Q")}</span>
+              </div>
+              <div className="toc-row reveal rd2">
+                <span className="toc-num">五</span>
+                <span className="toc-name toc-c5">{t("ch5Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch5Q")}</span>
+              </div>
+              <div className="toc-row reveal rd3">
+                <span className="toc-num">六</span>
+                <span className="toc-name toc-c6">{t("ch6Name")}</span>
+                <span className="toc-dots" />
+                <span className="toc-q">{t("ch6Q")}</span>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ── 4. BOOKSHELF — Year over Year ── */}
