@@ -205,12 +205,30 @@ body::before{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;
 .yoy-card-pending:hover{opacity:.5;transform:translateY(-4px)}
 .yoy-pending{font-family:var(--font-cormorant),serif;font-size:14px;font-style:italic;color:var(--dark-muted)}
 
-/* ═══════════════ 5. ENDING ═══════════════ */
-.ending{padding:120px 32px 80px;text-align:center;max-width:600px;margin:0 auto;position:relative;background:linear-gradient(180deg,transparent 0%,rgba(232,213,184,.06) 50%,transparent 100%)}
-.ending::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(184,150,90,.08),transparent);pointer-events:none}
-.ending-badges{display:flex;justify-content:center;gap:28px;margin-bottom:64px;flex-wrap:wrap;position:relative;z-index:1}
-.ending-badge{font-family:var(--font-cormorant),serif;font-size:11px;font-weight:500;letter-spacing:.22em;color:var(--faint);position:relative;padding-bottom:8px}
-.ending-badge::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:16px;height:.5px;background:var(--gold-warm);opacity:.35}
+/* ═══════════════ 5. PROMISE ═══════════════ */
+.promise{padding:120px 32px;max-width:880px;margin:0 auto;position:relative}
+.promise::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:48px;height:.5px;background:linear-gradient(90deg,transparent,var(--gold-warm) 50%,transparent);opacity:.25}
+.promise-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px)}
+.promise-item{text-align:center;padding:32px 16px}
+/* Icon — minimal geometric shapes */
+.promise-icon{width:32px;height:32px;margin:0 auto 24px;position:relative;opacity:.35}
+/* No Account — open circle (no lock) */
+.promise-icon-account::before{content:'';position:absolute;inset:2px;border:1.5px solid var(--text);border-radius:50%}
+.promise-icon-account::after{content:'';position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:10px;height:6px;border:1.5px solid var(--text);border-top:none;border-radius:0 0 5px 5px}
+/* No Ads — crossed-out rectangle */
+.promise-icon-ads::before{content:'';position:absolute;top:4px;left:4px;right:4px;bottom:4px;border:1.5px solid var(--text);border-radius:3px}
+.promise-icon-ads::after{content:'';position:absolute;top:2px;left:2px;width:calc(100% - 4px);height:calc(100% - 4px);background:linear-gradient(to top right,transparent calc(50% - .5px),var(--text) calc(50% - .5px),var(--text) calc(50% + .5px),transparent calc(50% + .5px))}
+/* No Tracking — eye with line through */
+.promise-icon-tracking::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22px;height:14px;border:1.5px solid var(--text);border-radius:50%}
+.promise-icon-tracking::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(45deg);width:30px;height:1.5px;background:var(--text)}
+/* iCloud — cloud shape */
+.promise-icon-cloud::before{content:'';position:absolute;bottom:8px;left:4px;right:4px;height:12px;border:1.5px solid var(--text);border-radius:6px}
+.promise-icon-cloud::after{content:'';position:absolute;bottom:13px;left:50%;transform:translateX(-50%);width:14px;height:10px;border:1.5px solid var(--text);border-bottom:none;border-radius:7px 7px 0 0;background:var(--bg)}
+.promise-label{font-family:var(--font-cormorant),serif;font-size:clamp(15px,1.8vw,18px);font-weight:400;letter-spacing:.06em;color:var(--text);margin-bottom:10px}
+.promise-desc{font-size:13px;font-weight:300;color:var(--muted);line-height:1.7;opacity:.7}
+
+/* ═══════════════ 6. ENDING ═══════════════ */
+.ending{padding:80px 32px 80px;text-align:center;max-width:600px;margin:0 auto;position:relative}
 .ending-title{font-family:var(--font-cormorant),serif;font-size:clamp(30px,5vw,48px);font-weight:300;line-height:1.4;margin-bottom:16px;position:relative;z-index:1}
 .ending-cta{position:relative;z-index:1;margin-top:40px}
 
@@ -236,8 +254,8 @@ body::before{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;
 :lang(zh-Hans) .ending-title,
 :lang(zh-Hans) .chapters-line,
 :lang(zh-Hans) .cta-btn{font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif}
-:lang(zh-Hans) .pq-chapter,
-:lang(zh-Hans) .ending-badge{letter-spacing:.12em;font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif}
+:lang(zh-Hans) .pq-chapter{letter-spacing:.12em;font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif}
+:lang(zh-Hans) .promise-label,:lang(zh-Hans) .promise-desc{font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif}
 
 /* ═══════════════ PRIVACY / PROSE ═══════════════ */
 .prose-page{max-width:640px;margin:0 auto;padding:120px 32px 100px;position:relative;z-index:1}
@@ -284,6 +302,7 @@ body::before{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;
   .yoy-cards{grid-template-columns:1fr 1fr;gap:12px}
   .shelf-book{width:clamp(30px,8vw,40px)}
   .shelf-board{width:clamp(160px,55vw,260px)}
+  .promise-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:480px){
   .showcase{padding:80px 20px 40px}
@@ -292,6 +311,9 @@ body::before{content:'';position:fixed;inset:0;opacity:.012;pointer-events:none;
   .ending{padding:100px 20px 80px}
   .yoy-cards{grid-template-columns:1fr}
   .yoy-card{padding:22px 18px}
+  .promise-grid{grid-template-columns:1fr}
+  .promise-item{padding:24px 16px}
+  .promise{padding:80px 20px}
   .cta-btn{padding:14px 36px;font-size:13px}
   .nav{padding:14px 20px}
   .ending-badges{gap:20px}

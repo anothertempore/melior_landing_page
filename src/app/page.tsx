@@ -215,15 +215,34 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── 5. ENDING ── */}
-        <section className="ending" aria-label={t("ariaDownload")}>
-          <div className="ending-badges reveal">
-            <span className="ending-badge">{t("badge1")}</span>
-            <span className="ending-badge">{t("badge2")}</span>
-            <span className="ending-badge">{t("badge3")}</span>
-            <span className="ending-badge">{t("badge4")}</span>
+        {/* ── 5. PROMISE — Privacy principles ── */}
+        <section className="promise">
+          <div className="promise-grid">
+            <div className="promise-item reveal">
+              <div className="promise-icon promise-icon-account" />
+              <div className="promise-label">{t("badge1")}</div>
+              <div className="promise-desc">{t("badge1Desc")}</div>
+            </div>
+            <div className="promise-item reveal rd1">
+              <div className="promise-icon promise-icon-ads" />
+              <div className="promise-label">{t("badge2")}</div>
+              <div className="promise-desc">{t("badge2Desc")}</div>
+            </div>
+            <div className="promise-item reveal rd2">
+              <div className="promise-icon promise-icon-tracking" />
+              <div className="promise-label">{t("badge3")}</div>
+              <div className="promise-desc">{t("badge3Desc")}</div>
+            </div>
+            <div className="promise-item reveal rd3">
+              <div className="promise-icon promise-icon-cloud" />
+              <div className="promise-label">{t("badge4")}</div>
+              <div className="promise-desc">{t("badge4Desc")}</div>
+            </div>
           </div>
-          <div className="hl reveal mb-14" />
+        </section>
+
+        {/* ── 6. ENDING ── */}
+        <section className="ending" aria-label={t("ariaDownload")}>
           <h2 className="ending-title reveal" dangerouslySetInnerHTML={{ __html: t.raw("endingTitle") }} />
           <div className="ending-cta reveal">
             <a href="#" className="cta-btn">
