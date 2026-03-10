@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { Feather, FileText, ShieldCheck, Cloud } from "lucide-react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
@@ -265,46 +266,28 @@ export default function Home() {
           <div className="promise-grid">
             <div className="promise-item reveal">
               <div className="promise-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 19l-1.5-2.5L12 4l1.5 12.5L12 19z" />
-                  <path d="M12 4c-.3-1-1-2-1-2" />
-                  <circle cx="12" cy="20.5" r=".8" fill="currentColor" stroke="none" />
-                </svg>
+                <Feather size={28} strokeWidth={1.2} />
               </div>
               <div className="promise-label">{t("badge1")}</div>
               <div className="promise-desc">{t("badge1Desc")}</div>
             </div>
             <div className="promise-item reveal rd1">
               <div className="promise-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <rect x="5" y="2" width="14" height="20" rx="1" />
-                  <path d="M5 5h14" opacity=".3" />
-                </svg>
+                <FileText size={28} strokeWidth={1.2} />
               </div>
               <div className="promise-label">{t("badge2")}</div>
               <div className="promise-desc">{t("badge2Desc")}</div>
             </div>
             <div className="promise-item reveal rd2">
               <div className="promise-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <rect x="3" y="6" width="18" height="14" rx="1" />
-                  <path d="M3 6l9 7 9-7" />
-                  <circle cx="12" cy="15" r="2.2" fill="var(--text)" fillOpacity=".12" strokeWidth="1" />
-                  <circle cx="12" cy="15" r=".6" fill="var(--text)" stroke="none" />
-                </svg>
+                <ShieldCheck size={28} strokeWidth={1.2} />
               </div>
               <div className="promise-label">{t("badge3")}</div>
               <div className="promise-desc">{t("badge3Desc")}</div>
             </div>
             <div className="promise-item reveal rd3">
               <div className="promise-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <rect x="5" y="2" width="14" height="20" rx="1.5" />
-                  <path d="M5 2h2v20H5z" fill="var(--text)" fillOpacity=".08" stroke="none" />
-                  <line x1="5" y1="2" x2="5" y2="22" />
-                  <circle cx="16" cy="12" r="1.8" />
-                  <path d="M17.8 12h1.5" />
-                </svg>
+                <Cloud size={28} strokeWidth={1.2} />
               </div>
               <div className="promise-label">{t("badge4")}</div>
               <div className="promise-desc">{t("badge4Desc")}</div>
