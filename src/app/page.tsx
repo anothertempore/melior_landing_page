@@ -136,7 +136,7 @@ export default function Home() {
           <h2 className="zh-section-title font-serif text-[clamp(28px,4.5vw,40px)] font-normal tracking-[.04em] text-text text-center mb-4 leading-tight reveal">
             {t("showcaseTitle")}
           </h2>
-          <p className="zh-font zh-showcase-line font-serif text-[clamp(19px,2.4vw,24px)] font-normal text-text leading-[1.7] mb-14 opacity-85 reveal">
+          <p className="zh-font zh-showcase-line font-serif text-[clamp(19px,2.4vw,24px)] font-light text-muted leading-[1.7] mb-14 reveal">
             {t("showcaseLine")}
           </p>
 
@@ -305,22 +305,34 @@ export default function Home() {
             </p>
             <div className="grid grid-cols-4 gap-[clamp(20px,3vw,40px)] max-[700px]:grid-cols-2 max-sm:grid-cols-1">
               {([
-                { icon: "promise-icon-account", label: t("badge1"), desc: t("badge1Desc"), delay: "" },
-                { icon: "promise-icon-ads", label: t("badge2"), desc: t("badge2Desc"), delay: "rd1" },
-                { icon: "promise-icon-tracking", label: t("badge3"), desc: t("badge3Desc"), delay: "rd2" },
-                { icon: "promise-icon-cloud", label: t("badge4"), desc: t("badge4Desc"), delay: "rd3" },
-              ] as const).map((item) => (
+                {
+                  label: t("badge1"), desc: t("badge1Desc"), delay: "",
+                  svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="2" y1="2" x2="22" y2="22"/></svg>,
+                },
+                {
+                  label: t("badge2"), desc: t("badge2Desc"), delay: "rd1",
+                  svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="3" y1="9" x2="9" y2="9"/><line x1="2" y1="2" x2="22" y2="22"/></svg>,
+                },
+                {
+                  label: t("badge3"), desc: t("badge3Desc"), delay: "rd2",
+                  svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><line x1="2" y1="2" x2="22" y2="22"/></svg>,
+                },
+                {
+                  label: t("badge4"), desc: t("badge4Desc"), delay: "rd3",
+                  svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>,
+                },
+              ] as const).map((item, i) => (
                 <div
-                  key={item.icon}
+                  key={i}
                   className={`promise-card-texture reveal ${item.delay} text-center p-8 px-5 max-sm:p-6 max-sm:px-4 rounded-lg relative border border-black/4 transition-all duration-400 hover:-translate-y-[3px] hover:shadow-[0_2px_6px_rgba(0,0,0,.04),0_8px_20px_rgba(0,0,0,.05)]`}
                   style={{
                     background: "linear-gradient(170deg, rgba(255,255,255,.8), rgba(250,249,247,.5))",
                     boxShadow: "0 1px 3px rgba(0,0,0,.03), 0 4px 12px rgba(0,0,0,.03)",
                   }}
                 >
-                  <div className={`${item.icon} w-8 h-8 mx-auto mb-6 relative opacity-40`} />
-                  <div className="zh-font zh-promise-label font-serif text-[clamp(17px,2.2vw,22px)] font-medium tracking-[.05em] text-text mb-2.5">{item.label}</div>
-                  <div className="zh-font zh-promise-desc text-[15px] font-light text-muted leading-[1.8] tracking-[.01em]">{item.desc}</div>
+                  <div className="w-9 h-9 mx-auto mb-6 text-muted opacity-50">{item.svg}</div>
+                  <div className="zh-font zh-promise-label font-serif text-[clamp(18px,2.4vw,24px)] font-semibold tracking-[.04em] text-text mb-3">{item.label}</div>
+                  <div className="zh-font zh-promise-desc text-[14px] font-light text-faint leading-[1.8] tracking-[.01em]">{item.desc}</div>
                 </div>
               ))}
             </div>
