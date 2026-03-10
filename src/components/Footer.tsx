@@ -26,11 +26,11 @@ export default function Footer({ showLinks = false }: FooterProps) {
       )}
 
       <p className="footer-credit">
-        Crafted with{" "}
+        <span>Crafted with</span>
         <svg className="footer-heart" viewBox="0 0 16 15" aria-label="love">
           <path d="M8 14s-5.5-3.5-6.8-6.4C.2 5.5.8 3.2 2.6 2.2a3.6 3.6 0 0 1 4.2.5L8 3.8l1.2-1.1a3.6 3.6 0 0 1 4.2-.5c1.8 1 2.4 3.3 1.4 5.4C13.5 10.5 8 14 8 14z" />
         </svg>
-        {" "}by{" "}
+        <span>by</span>
         <a href="https://kexin.li">Kexin</a>
       </p>
     </footer>
