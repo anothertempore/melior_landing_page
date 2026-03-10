@@ -223,10 +223,10 @@ export default function Home() {
 
             {/* Shelf with book spines */}
             <div className="shelf reveal" aria-hidden="true">
-              <div className="shelf-book shelf-b1"><span>2024</span></div>
-              <div className="shelf-book shelf-b2"><span>2025</span></div>
-              <div className="shelf-book shelf-b3"><span>2026</span></div>
-              <div className="shelf-book shelf-b4"><span>2027</span></div>
+              <div className="shelf-book shelf-b1"><span>2023</span></div>
+              <div className="shelf-book shelf-b2"><span>2024</span></div>
+              <div className="shelf-book shelf-b3"><span>2025</span></div>
+              <div className="shelf-book shelf-b4"><span>2026</span></div>
               <div className="shelf-board" />
             </div>
 
@@ -234,22 +234,22 @@ export default function Home() {
 
             <div className="yoy-cards reveal">
               <div className="yoy-card">
+                <div className="yoy-card-year">2023</div>
+                <div className="yoy-card-rule" />
+                <div className="yoy-card-text">{t("yoy2023")}</div>
+              </div>
+              <div className="yoy-card">
                 <div className="yoy-card-year">2024</div>
                 <div className="yoy-card-rule" />
                 <div className="yoy-card-text">{t("yoy2024")}</div>
               </div>
-              <div className="yoy-card">
+              <div className="yoy-card yoy-card-current">
                 <div className="yoy-card-year">2025</div>
                 <div className="yoy-card-rule" />
                 <div className="yoy-card-text">{t("yoy2025")}</div>
               </div>
-              <div className="yoy-card">
-                <div className="yoy-card-year">2026</div>
-                <div className="yoy-card-rule" />
-                <div className="yoy-card-text">{t("yoy2026")}</div>
-              </div>
               <div className="yoy-card yoy-card-pending">
-                <div className="yoy-card-year">2027</div>
+                <div className="yoy-card-year">2026</div>
                 <div className="yoy-card-rule" />
                 <div className="yoy-pending">{t("yoyPending")}</div>
               </div>
@@ -264,22 +264,48 @@ export default function Home() {
           <p className="section-sub reveal">{t("promiseSub")}</p>
           <div className="promise-grid">
             <div className="promise-item reveal">
-              <div className="promise-icon promise-icon-account" />
+              <div className="promise-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 19l-1.5-2.5L12 4l1.5 12.5L12 19z" />
+                  <path d="M12 4c-.3-1-1-2-1-2" />
+                  <circle cx="12" cy="20.5" r=".8" fill="currentColor" stroke="none" />
+                </svg>
+              </div>
               <div className="promise-label">{t("badge1")}</div>
               <div className="promise-desc">{t("badge1Desc")}</div>
             </div>
             <div className="promise-item reveal rd1">
-              <div className="promise-icon promise-icon-ads" />
+              <div className="promise-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="5" y="2" width="14" height="20" rx="1" />
+                  <path d="M5 5h14" opacity=".3" />
+                </svg>
+              </div>
               <div className="promise-label">{t("badge2")}</div>
               <div className="promise-desc">{t("badge2Desc")}</div>
             </div>
             <div className="promise-item reveal rd2">
-              <div className="promise-icon promise-icon-tracking" />
+              <div className="promise-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="6" width="18" height="14" rx="1" />
+                  <path d="M3 6l9 7 9-7" />
+                  <circle cx="12" cy="15" r="2.2" fill="var(--text)" fillOpacity=".12" strokeWidth="1" />
+                  <circle cx="12" cy="15" r=".6" fill="var(--text)" stroke="none" />
+                </svg>
+              </div>
               <div className="promise-label">{t("badge3")}</div>
               <div className="promise-desc">{t("badge3Desc")}</div>
             </div>
             <div className="promise-item reveal rd3">
-              <div className="promise-icon promise-icon-cloud" />
+              <div className="promise-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="5" y="2" width="14" height="20" rx="1.5" />
+                  <path d="M5 2h2v20H5z" fill="var(--text)" fillOpacity=".08" stroke="none" />
+                  <line x1="5" y1="2" x2="5" y2="22" />
+                  <circle cx="16" cy="12" r="1.8" />
+                  <path d="M17.8 12h1.5" />
+                </svg>
+              </div>
               <div className="promise-label">{t("badge4")}</div>
               <div className="promise-desc">{t("badge4Desc")}</div>
             </div>
