@@ -332,8 +332,10 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
 .footer-links a{font-family:var(--font-cormorant),serif;font-size:13px;font-weight:400;letter-spacing:.08em;color:var(--muted);text-decoration:none;transition:color .3s;position:relative}
 .footer-links a:hover{color:var(--gold-warm)}
 .footer-dot{width:2px;height:2px;border-radius:50%;background:var(--stroke)}
-.footer-credit{font-size:12px;color:var(--muted);font-weight:300;letter-spacing:.03em;opacity:.7}
-.footer-credit a{color:var(--muted);text-decoration:none;border-bottom:.5px solid transparent;padding-bottom:1px;transition:color .3s,border-color .3s}
+.footer-credit{font-size:12px;color:var(--muted);font-weight:300;letter-spacing:.03em;opacity:.7;display:flex;align-items:center;justify-content:center;gap:3px}
+.footer-heart{width:13px;height:13px;fill:none;stroke:var(--gold-warm);stroke-width:.8;opacity:.6;transition:all .4s cubic-bezier(.22,1,.36,1)}
+.footer-credit:hover .footer-heart{fill:var(--gold-warm);stroke:var(--gold-warm);opacity:.8;transform:scale(1.15)}
+.footer-credit a{color:var(--gold);text-decoration:none;border-bottom:.5px solid var(--gold-warm);border-bottom-color:rgba(122,96,64,.25);padding-bottom:1px;transition:color .3s,border-color .3s}
 .footer-credit a:hover{color:var(--gold-warm);border-bottom-color:var(--gold-warm)}
 
 /* ═══════════════ CHINESE FONT OVERRIDE ═══════════════ */
