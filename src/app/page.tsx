@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { Feather, FileText, ShieldCheck, Cloud } from "lucide-react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
@@ -223,10 +224,10 @@ export default function Home() {
 
             {/* Shelf with book spines */}
             <div className="shelf reveal" aria-hidden="true">
-              <div className="shelf-book shelf-b1"><span>2024</span></div>
-              <div className="shelf-book shelf-b2"><span>2025</span></div>
-              <div className="shelf-book shelf-b3"><span>2026</span></div>
-              <div className="shelf-book shelf-b4"><span>2027</span></div>
+              <div className="shelf-book shelf-b1"><span>2023</span></div>
+              <div className="shelf-book shelf-b2"><span>2024</span></div>
+              <div className="shelf-book shelf-b3"><span>2025</span></div>
+              <div className="shelf-book shelf-b4"><span>2026</span></div>
               <div className="shelf-board" />
             </div>
 
@@ -234,22 +235,22 @@ export default function Home() {
 
             <div className="yoy-cards reveal">
               <div className="yoy-card">
+                <div className="yoy-card-year">2023</div>
+                <div className="yoy-card-rule" />
+                <div className="yoy-card-text">{t("yoy2023")}</div>
+              </div>
+              <div className="yoy-card">
                 <div className="yoy-card-year">2024</div>
                 <div className="yoy-card-rule" />
                 <div className="yoy-card-text">{t("yoy2024")}</div>
               </div>
-              <div className="yoy-card">
+              <div className="yoy-card yoy-card-current">
                 <div className="yoy-card-year">2025</div>
                 <div className="yoy-card-rule" />
                 <div className="yoy-card-text">{t("yoy2025")}</div>
               </div>
-              <div className="yoy-card">
-                <div className="yoy-card-year">2026</div>
-                <div className="yoy-card-rule" />
-                <div className="yoy-card-text">{t("yoy2026")}</div>
-              </div>
               <div className="yoy-card yoy-card-pending">
-                <div className="yoy-card-year">2027</div>
+                <div className="yoy-card-year">2026</div>
                 <div className="yoy-card-rule" />
                 <div className="yoy-pending">{t("yoyPending")}</div>
               </div>
@@ -264,22 +265,30 @@ export default function Home() {
           <p className="section-sub reveal">{t("promiseSub")}</p>
           <div className="promise-grid">
             <div className="promise-item reveal">
-              <div className="promise-icon promise-icon-account" />
+              <div className="promise-icon" aria-hidden="true">
+                <Feather size={28} strokeWidth={1.2} />
+              </div>
               <div className="promise-label">{t("badge1")}</div>
               <div className="promise-desc">{t("badge1Desc")}</div>
             </div>
             <div className="promise-item reveal rd1">
-              <div className="promise-icon promise-icon-ads" />
+              <div className="promise-icon" aria-hidden="true">
+                <FileText size={28} strokeWidth={1.2} />
+              </div>
               <div className="promise-label">{t("badge2")}</div>
               <div className="promise-desc">{t("badge2Desc")}</div>
             </div>
             <div className="promise-item reveal rd2">
-              <div className="promise-icon promise-icon-tracking" />
+              <div className="promise-icon" aria-hidden="true">
+                <ShieldCheck size={28} strokeWidth={1.2} />
+              </div>
               <div className="promise-label">{t("badge3")}</div>
               <div className="promise-desc">{t("badge3Desc")}</div>
             </div>
             <div className="promise-item reveal rd3">
-              <div className="promise-icon promise-icon-cloud" />
+              <div className="promise-icon" aria-hidden="true">
+                <Cloud size={28} strokeWidth={1.2} />
+              </div>
               <div className="promise-label">{t("badge4")}</div>
               <div className="promise-desc">{t("badge4Desc")}</div>
             </div>
