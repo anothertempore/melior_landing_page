@@ -2,6 +2,8 @@
   "home": {
     "heroTag": "Write your year into a book.",
     "heroCta": "Download Melior",
+    "bridge": "Music and writing — both hold time still.<br/>Melody remembers sound; words remember feeling.<br/>Every year deserves to be kept.",
+    "bridgeNote": "Melior — your year, on record.",
     "showcaseLine": "Not a year-end review — a book about you.",
     "chaptersLine": "30 Questions · 6 Chapters",
     "sChT": "Highlights",
@@ -37,6 +39,7 @@
     "endingTitle": "What would you like<br/>to say this year?",
     "endingCta": "Download Melior",
     "ariaHero": "Hero",
+    "ariaBridge": "Concept",
     "ariaShowcase": "Showcase",
     "ariaQuote": "Quote",
     "ariaYoy": "Year over Year",

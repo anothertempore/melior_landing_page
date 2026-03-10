@@ -13,28 +13,26 @@ const APPLE_ICON = (
 
 export default function Home() {
   const t = useTranslations("home");
-  const scrollLightRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const yoyRef = useRef<HTMLDivElement>(null);
-  const heroLettersRef = useRef<HTMLDivElement>(null);
-  const heroHlRef = useRef<HTMLDivElement>(null);
+  const rpRef = useRef<HTMLDivElement>(null);
+  const armRef = useRef<HTMLDivElement>(null);
+  const vinylRef = useRef<HTMLDivElement>(null);
+  const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const heroTagRef = useRef<HTMLParagraphElement>(null);
   const heroCtaRef = useRef<HTMLDivElement>(null);
   const heroScrollRef = useRef<HTMLDivElement>(null);
 
-  // Hero animation sequence
+  // Hero animation — "drop the needle"
   useEffect(() => {
-    const letters = heroLettersRef.current?.querySelectorAll(".hero-l");
-    if (!letters) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
-    letters.forEach((el, i) => {
-      timers.push(setTimeout(() => el.classList.add("on"), 500 + i * 130));
-    });
-    const d = 500 + 6 * 130 + 350;
-    timers.push(setTimeout(() => heroHlRef.current?.classList.add("on"), d));
-    timers.push(setTimeout(() => heroTagRef.current?.classList.add("on"), d + 150));
-    timers.push(setTimeout(() => heroCtaRef.current?.classList.add("on"), d + 750));
-    timers.push(setTimeout(() => heroScrollRef.current?.classList.add("on"), d + 1250));
+    timers.push(setTimeout(() => rpRef.current?.classList.add("on"), 300));
+    timers.push(setTimeout(() => armRef.current?.classList.add("playing"), 1200));
+    timers.push(setTimeout(() => vinylRef.current?.classList.add("spinning"), 1800));
+    timers.push(setTimeout(() => heroTitleRef.current?.classList.add("on"), 2200));
+    timers.push(setTimeout(() => heroTagRef.current?.classList.add("on"), 2600));
+    timers.push(setTimeout(() => heroCtaRef.current?.classList.add("on"), 3200));
+    timers.push(setTimeout(() => heroScrollRef.current?.classList.add("on"), 3800));
     return () => timers.forEach(clearTimeout);
   }, []);
 
@@ -72,69 +70,37 @@ export default function Home() {
     return () => ob.disconnect();
   }, []);
 
-  // Scroll-responsive reading light + light leak parallax (combined)
-  useEffect(() => {
-    const light = scrollLightRef.current;
-    const leaks = document.querySelectorAll<HTMLElement>(".leak");
-    const speeds = [0.04, 0.025, 0.035, 0.02];
-    if (!light) return;
-    let ticking = false;
-    function onScroll() {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const y = window.scrollY;
-          const docH = document.documentElement.scrollHeight - window.innerHeight;
-          const pct = docH > 0 ? y / docH : 0;
-          light!.style.top = 10 + pct * 75 + "vh";
-          leaks.forEach((l, i) => {
-            l.style.marginTop = -y * speeds[i] + "px";
-          });
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <>
-      {/* Mesh gradient */}
-      <div className="mesh" aria-hidden="true">
-        <div className="mesh-blob mesh-b1" />
-        <div className="mesh-blob mesh-b2" />
-        <div className="mesh-blob mesh-b3" />
-        <div className="mesh-blob mesh-b4" />
-        <div className="mesh-blob mesh-b5" />
-      </div>
-
-      {/* Light leaks */}
-      <div className="leaks-container" aria-hidden="true">
-        <div className="leak leak-1" />
-        <div className="leak leak-2" />
-        <div className="leak leak-3" />
-        <div className="leak leak-4" />
-      </div>
-      <div className="scroll-light" ref={scrollLightRef} aria-hidden="true" />
+      <div className="ambient" aria-hidden="true" />
 
       <Nav navRef={navRef} />
 
       <main>
-        {/* 1. HERO */}
+        {/* 1. HERO — Record Player */}
         <section className="hero" aria-label={t("ariaHero")}>
-          <div className="hero-glow" aria-hidden="true" />
-          <div className="hero-glow-2" aria-hidden="true" />
-          <div className="hero-letters" ref={heroLettersRef} aria-label="Melior">
-            <span className="hero-l" aria-hidden="true">M</span>
-            <span className="hero-l" aria-hidden="true">e</span>
-            <span className="hero-l" aria-hidden="true">l</span>
-            <span className="hero-l hero-l-i" aria-hidden="true">i<span className="tittle" /></span>
-            <span className="hero-l" aria-hidden="true">o</span>
-            <span className="hero-l" aria-hidden="true">r</span>
+          <div className="rp" ref={rpRef} aria-hidden="true">
+            <div className="rp-surface">
+              <div className="rp-platter">
+                <div className="vinyl" ref={vinylRef}>
+                  <div className="vinyl-label">
+                    <span className="vinyl-year">2025</span>
+                    <span className="vinyl-dot" />
+                    <span className="vinyl-brand">Melior</span>
+                  </div>
+                  <div className="vinyl-shine" />
+                </div>
+              </div>
+              <div className="rp-arm" ref={armRef}>
+                <div className="rp-arm-head" />
+              </div>
+              <div className="rp-controls">
+                <div className="rp-knob" />
+                <div className="rp-knob rp-knob-s" />
+              </div>
+            </div>
           </div>
-          <div className="hero-hl" ref={heroHlRef}><div className="hl" style={{ width: 60 }} /></div>
+          <h1 className="hero-title" ref={heroTitleRef}>Melior</h1>
           <p className="hero-tag" ref={heroTagRef}>{t("heroTag")}</p>
           <div className="hero-cta" ref={heroCtaRef}>
             <a href="#" className="cta-btn cta-btn-ring">
@@ -148,10 +114,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 2. SHOWCASE */}
+        {/* 2. BRIDGE — Music & Writing */}
+        <section className="bridge" aria-label={t("ariaBridge")}>
+          {/* Grooves becoming lines — music → writing */}
+          <svg className="groove-lines reveal" viewBox="0 0 120 48" aria-hidden="true">
+            <path d="M10,40 Q60,-5 110,40" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.12" />
+            <path d="M18,40 Q60,5 102,40" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.12" />
+            <path d="M26,40 Q60,14 94,40" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.1" />
+            <line x1="32" y1="40" x2="88" y2="40" stroke="currentColor" strokeWidth="0.5" opacity="0.08" />
+            <line x1="36" y1="46" x2="84" y2="46" stroke="currentColor" strokeWidth="0.5" opacity="0.06" />
+          </svg>
+          <div className="bridge-text reveal rd1" dangerouslySetInnerHTML={{ __html: t.raw("bridge") }} />
+          <p className="bridge-note reveal rd2">{t("bridgeNote")}</p>
+        </section>
+
+        {/* 3. SHOWCASE */}
         <section className="showcase" aria-label={t("ariaShowcase")}>
-          <div className="showcase-glow" aria-hidden="true" />
-          <div className="showcase-glow-2" aria-hidden="true" />
           <div className="hl reveal mb-14" />
           <p className="showcase-line reveal">{t("showcaseLine")}</p>
           <div className="phones reveal rd1" aria-hidden="true">
@@ -212,51 +190,46 @@ export default function Home() {
           <p className="chapters-line reveal rd2">{t("chaptersLine")}</p>
         </section>
 
-        {/* 3. PULL QUOTE */}
+        {/* 4. PULL QUOTE */}
         <section className="pullquote" aria-label={t("ariaQuote")}>
           <div className="pq-mark reveal" aria-hidden="true">&ldquo;</div>
           <div className="pq-text reveal rd1" dangerouslySetInnerHTML={{ __html: t.raw("pqText") }} />
           <div className="pq-chapter reveal rd2">{t("pqChapter")}</div>
         </section>
 
-        {/* 4. YEAR-OVER-YEAR */}
+        {/* 5. YEAR-OVER-YEAR */}
         <section className="yoy" id="yoy" ref={yoyRef} aria-label={t("ariaYoy")}>
-          <div className="yoy-glow" aria-hidden="true" />
-          <div className="yoy-glow-2" aria-hidden="true" />
           <div className="yoy-in">
             <div className="hl hl-dark reveal mb-10" />
             <div className="yoy-q reveal" dangerouslySetInnerHTML={{ __html: t.raw("yoyQ") }} />
-            <div className="yoy-cards-wrap reveal">
-              <div className="yoy-cards">
-                <div className="yoy-card">
-                  <div className="yoy-card-year">2024</div>
-                  <div className="yoy-card-rule" />
-                  <div className="yoy-card-text">{t("yoy2024")}</div>
-                </div>
-                <div className="yoy-card">
-                  <div className="yoy-card-year">2025</div>
-                  <div className="yoy-card-rule" />
-                  <div className="yoy-card-text">{t("yoy2025")}</div>
-                </div>
-                <div className="yoy-card">
-                  <div className="yoy-card-year">2026</div>
-                  <div className="yoy-card-rule" />
-                  <div className="yoy-card-text">{t("yoy2026")}</div>
-                </div>
-                <div className="yoy-card">
-                  <div className="yoy-card-year" style={{ color: "var(--dark-muted)" }}>2027</div>
-                  <div className="yoy-card-rule" style={{ opacity: 0.15 }} />
-                  <div className="yoy-pending">{t("yoyPending")}</div>
-                </div>
+            <div className="yoy-cards reveal">
+              <div className="yoy-card">
+                <div className="yoy-card-year">2024</div>
+                <div className="yoy-card-rule" />
+                <div className="yoy-card-text">{t("yoy2024")}</div>
+              </div>
+              <div className="yoy-card">
+                <div className="yoy-card-year">2025</div>
+                <div className="yoy-card-rule" />
+                <div className="yoy-card-text">{t("yoy2025")}</div>
+              </div>
+              <div className="yoy-card">
+                <div className="yoy-card-year">2026</div>
+                <div className="yoy-card-rule" />
+                <div className="yoy-card-text">{t("yoy2026")}</div>
+              </div>
+              <div className="yoy-card yoy-card-pending">
+                <div className="yoy-card-year">2027</div>
+                <div className="yoy-card-rule" />
+                <div className="yoy-pending">{t("yoyPending")}</div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 5. ENDING */}
+        {/* 6. ENDING */}
         <section className="ending" aria-label={t("ariaDownload")}>
-          <div className="ending-glow" aria-hidden="true" />
-          <div className="flex justify-center gap-7 mb-16 flex-wrap relative z-1 reveal">
+          <div className="ending-badges reveal">
             <span className="ending-badge">{t("badge1")}</span>
             <span className="ending-badge">{t("badge2")}</span>
             <span className="ending-badge">{t("badge3")}</span>
@@ -264,7 +237,7 @@ export default function Home() {
           </div>
           <div className="hl reveal mb-14" />
           <h2 className="ending-title reveal" dangerouslySetInnerHTML={{ __html: t.raw("endingTitle") }} />
-          <div className="relative z-1 mt-10 reveal">
+          <div className="ending-cta reveal">
             <a href="#" className="cta-btn">
               {APPLE_ICON}
               <span>{t("endingCta")}</span>

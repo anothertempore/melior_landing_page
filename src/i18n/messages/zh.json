@@ -2,6 +2,8 @@
   "home": {
     "heroTag": "把每一年，写成一本书。",
     "heroCta": "下载 Melior",
+    "bridge": "音乐与文字，都是时间的容器。<br/>旋律记住声音，文字记住心情。<br/>每过一年，都值得被好好记录。",
+    "bridgeNote": "Melior，你的年度唱片。",
     "showcaseLine": "不是年终总结，是一本关于你自己的书。",
     "chaptersLine": "30 个问题 · 6 个篇章",
     "sChT": "高光时刻",
@@ -37,6 +39,7 @@
     "endingTitle": "今年的你，<br/>有什么想说的？",
     "endingCta": "下载 Melior",
     "ariaHero": "首页",
+    "ariaBridge": "理念",
     "ariaShowcase": "产品展示",
     "ariaQuote": "引言",
     "ariaYoy": "年度回顾",
