@@ -15,24 +15,20 @@ export default function Home() {
   const t = useTranslations("home");
   const navRef = useRef<HTMLElement>(null);
   const yoyRef = useRef<HTMLDivElement>(null);
-  const rpRef = useRef<HTMLDivElement>(null);
-  const armRef = useRef<HTMLDivElement>(null);
-  const vinylRef = useRef<HTMLDivElement>(null);
+  const bookRef = useRef<HTMLDivElement>(null);
   const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const heroTagRef = useRef<HTMLParagraphElement>(null);
   const heroCtaRef = useRef<HTMLDivElement>(null);
   const heroScrollRef = useRef<HTMLDivElement>(null);
 
-  // Hero animation — "drop the needle"
+  // Hero animation — the book appears
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
-    timers.push(setTimeout(() => rpRef.current?.classList.add("on"), 300));
-    timers.push(setTimeout(() => armRef.current?.classList.add("playing"), 1200));
-    timers.push(setTimeout(() => vinylRef.current?.classList.add("spinning"), 1800));
-    timers.push(setTimeout(() => heroTitleRef.current?.classList.add("on"), 2200));
-    timers.push(setTimeout(() => heroTagRef.current?.classList.add("on"), 2600));
-    timers.push(setTimeout(() => heroCtaRef.current?.classList.add("on"), 3200));
-    timers.push(setTimeout(() => heroScrollRef.current?.classList.add("on"), 3800));
+    timers.push(setTimeout(() => bookRef.current?.classList.add("on"), 300));
+    timers.push(setTimeout(() => heroTitleRef.current?.classList.add("on"), 1200));
+    timers.push(setTimeout(() => heroTagRef.current?.classList.add("on"), 1600));
+    timers.push(setTimeout(() => heroCtaRef.current?.classList.add("on"), 2200));
+    timers.push(setTimeout(() => heroScrollRef.current?.classList.add("on"), 2800));
     return () => timers.forEach(clearTimeout);
   }, []);
 
@@ -77,63 +73,45 @@ export default function Home() {
       <Nav navRef={navRef} />
 
       <main>
-        {/* 1. HERO — Record Player */}
+        {/* ── 1. HERO — The Book ── */}
         <section className="hero" aria-label={t("ariaHero")}>
-          <div className="rp" ref={rpRef} aria-hidden="true">
-            <div className="rp-surface">
-              <div className="rp-platter">
-                <div className="vinyl" ref={vinylRef}>
-                  <div className="vinyl-label">
-                    <span className="vinyl-year">2025</span>
-                    <span className="vinyl-dot" />
-                    <span className="vinyl-brand">Melior</span>
-                  </div>
-                  <div className="vinyl-shine" />
-                </div>
+          <div className="book" ref={bookRef} aria-hidden="true">
+            <div className="book-cover">
+              <div className="book-spine" />
+              <div className="book-inner">
+                <span className="book-year">2025</span>
+                <span className="book-rule" />
+                <span className="book-brand">Melior</span>
               </div>
-              <div className="rp-arm" ref={armRef}>
-                <div className="rp-arm-head" />
-              </div>
-              <div className="rp-controls">
-                <div className="rp-knob" />
-                <div className="rp-knob rp-knob-s" />
-              </div>
+              <div className="book-ribbon" />
             </div>
+            <div className="book-pages" />
+            <div className="book-shadow" />
           </div>
+
           <h1 className="hero-title" ref={heroTitleRef}>Melior</h1>
           <p className="hero-tag" ref={heroTagRef}>{t("heroTag")}</p>
+
           <div className="hero-cta" ref={heroCtaRef}>
             <a href="#" className="cta-btn cta-btn-ring">
               {APPLE_ICON}
               <span>{t("heroCta")}</span>
             </a>
           </div>
+
           <div className="hero-scroll" ref={heroScrollRef} aria-hidden="true">
             <span className="hero-scroll-text">Scroll</span>
             <span className="hero-scroll-arrow" />
           </div>
         </section>
 
-        {/* 2. BRIDGE — Music & Writing */}
-        <section className="bridge" aria-label={t("ariaBridge")}>
-          {/* Grooves becoming lines — music → writing */}
-          <svg className="groove-lines reveal" viewBox="0 0 120 48" aria-hidden="true">
-            <path d="M10,40 Q60,-5 110,40" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.12" />
-            <path d="M18,40 Q60,5 102,40" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.12" />
-            <path d="M26,40 Q60,14 94,40" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.1" />
-            <line x1="32" y1="40" x2="88" y2="40" stroke="currentColor" strokeWidth="0.5" opacity="0.08" />
-            <line x1="36" y1="46" x2="84" y2="46" stroke="currentColor" strokeWidth="0.5" opacity="0.06" />
-          </svg>
-          <div className="bridge-text reveal rd1" dangerouslySetInnerHTML={{ __html: t.raw("bridge") }} />
-          <p className="bridge-note reveal rd2">{t("bridgeNote")}</p>
-        </section>
-
-        {/* 3. SHOWCASE */}
+        {/* ── 2. SHOWCASE — Inside the Book ── */}
         <section className="showcase" aria-label={t("ariaShowcase")}>
-          <div className="hl reveal mb-14" />
+          <div className="hl reveal" />
           <p className="showcase-line reveal">{t("showcaseLine")}</p>
+
           <div className="phones reveal rd1" aria-hidden="true">
-            {/* Left phone — Chapter list */}
+            {/* Left — Chapter list */}
             <div className="ph ph-2">
               <div className="ph-scr"><div className="ph-notch" />
                 <div className="s-ch">
@@ -147,7 +125,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            {/* Center phone — Home */}
+            {/* Center — Home */}
             <div className="ph ph-0">
               <div className="ph-scr"><div className="ph-notch" />
                 <div className="s-home">
@@ -168,7 +146,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            {/* Right phone — Summary */}
+            {/* Right — Summary */}
             <div className="ph ph-1">
               <div className="ph-scr"><div className="ph-notch" />
                 <div className="s-sum">
@@ -187,21 +165,31 @@ export default function Home() {
               </div>
             </div>
           </div>
+
           <p className="chapters-line reveal rd2">{t("chaptersLine")}</p>
         </section>
 
-        {/* 4. PULL QUOTE */}
+        {/* ── 3. PULL QUOTE — One page, one question ── */}
         <section className="pullquote" aria-label={t("ariaQuote")}>
           <div className="pq-mark reveal" aria-hidden="true">&ldquo;</div>
           <div className="pq-text reveal rd1" dangerouslySetInnerHTML={{ __html: t.raw("pqText") }} />
           <div className="pq-chapter reveal rd2">{t("pqChapter")}</div>
         </section>
 
-        {/* 5. YEAR-OVER-YEAR */}
+        {/* ── 4. BOOKSHELF — Year over Year ── */}
         <section className="yoy" id="yoy" ref={yoyRef} aria-label={t("ariaYoy")}>
           <div className="yoy-in">
-            <div className="hl hl-dark reveal mb-10" />
+            {/* Shelf with book spines */}
+            <div className="shelf reveal" aria-hidden="true">
+              <div className="shelf-book shelf-b1"><span>2024</span></div>
+              <div className="shelf-book shelf-b2"><span>2025</span></div>
+              <div className="shelf-book shelf-b3"><span>2026</span></div>
+              <div className="shelf-book shelf-b4"><span>2027</span></div>
+              <div className="shelf-board" />
+            </div>
+
             <div className="yoy-q reveal" dangerouslySetInnerHTML={{ __html: t.raw("yoyQ") }} />
+
             <div className="yoy-cards reveal">
               <div className="yoy-card">
                 <div className="yoy-card-year">2024</div>
@@ -227,7 +215,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 6. ENDING */}
+        {/* ── 5. ENDING ── */}
         <section className="ending" aria-label={t("ariaDownload")}>
           <div className="ending-badges reveal">
             <span className="ending-badge">{t("badge1")}</span>
