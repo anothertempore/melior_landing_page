@@ -41,6 +41,10 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
 .section-sub-dk{color:var(--dark-muted)}
 :lang(zh-Hans) .section-title{font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif;letter-spacing:.06em}
 :lang(zh-Hans) .section-sub{font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif;letter-spacing:.04em}
+/* English: stronger title / subtitle contrast */
+:lang(en) .section-title{font-weight:500}
+:lang(en) .section-sub{color:var(--faint)}
+:lang(en) .section-sub-dk{color:#7A787E}
 
 /* ═══════════════ NAV ═══════════════ */
 .nav{position:absolute;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 28px;transition:color .3s}
@@ -351,6 +355,9 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
 :lang(zh-Hans) .chapters-line,
 :lang(zh-Hans) .cta-btn{font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif}
 :lang(zh-Hans) .promise-label,:lang(zh-Hans) .promise-desc{font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif}
+/* English: stronger card title / desc contrast */
+:lang(en) .promise-label{font-weight:600}
+:lang(en) .promise-desc{color:var(--faint)}
 /* Chinese typography tuning */
 :lang(zh-Hans) .hero-tag{letter-spacing:.06em;font-size:clamp(15px,1.8vw,17px)}
 :lang(zh-Hans) .showcase-line{letter-spacing:.04em;line-height:1.8}
