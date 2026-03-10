@@ -258,7 +258,8 @@ export default function Home() {
         </section>
 
         {/* ── 5. PROMISE — Privacy principles ── */}
-        <section className="promise">
+        <section className="promise-wrap">
+        <div className="promise">
           <h2 className="section-title reveal">{t("promiseTitle")}</h2>
           <p className="section-sub reveal">{t("promiseSub")}</p>
           <div className="promise-grid">
@@ -283,6 +284,7 @@ export default function Home() {
               <div className="promise-desc">{t("badge4Desc")}</div>
             </div>
           </div>
+        </div>
         </section>
 
         {/* ── 6. ENDING ── */}
