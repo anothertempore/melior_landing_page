@@ -77,16 +77,36 @@ export default function Home() {
         {/* ── 1. HERO — The Book ── */}
         <section className="hero" aria-label={t("ariaHero")}>
           <div className="book" ref={bookRef} aria-hidden="true">
-            <div className="book-cover">
-              <div className="book-spine" />
-              <div className="book-inner">
-                <span className="book-year">2025</span>
-                <span className="book-rule" />
-                <span className="book-brand">Melior</span>
+            {/* Closed book — mobile */}
+            <div className="book-closed">
+              <div className="book-cover">
+                <div className="book-spine" />
+                <div className="book-inner">
+                  <span className="book-year">2025</span>
+                  <span className="book-rule" />
+                  <span className="book-brand">Melior</span>
+                </div>
+                <div className="book-ribbon" />
               </div>
-              <div className="book-ribbon" />
+              <div className="book-pages" />
             </div>
-            <div className="book-pages" />
+            {/* Open book — desktop */}
+            <div className="book-open">
+              <div className="book-page book-page-left">
+                <div className="book-page-fold" />
+                <div className="book-page-content">
+                  <span className="book-year">2025</span>
+                  <span className="book-rule" />
+                  <span className="book-brand">Melior</span>
+                </div>
+              </div>
+              <div className="book-gutter" />
+              <div className="book-page book-page-right">
+                <div className="book-page-fold" />
+                <div className="book-page-lines" />
+                <div className="book-ribbon-open" />
+              </div>
+            </div>
             <div className="book-shadow" />
           </div>
 
@@ -112,10 +132,25 @@ export default function Home() {
           <h2 className="section-title reveal">{t("showcaseTitle")}</h2>
           <p className="showcase-line reveal">{t("showcaseLine")}</p>
 
-          {/* Phone case image placeholder */}
-          <div className="phone-case-placeholder reveal rd2">
-            <div className="phone-case-placeholder-inner">
-              <span>Phone Case Image</span>
+          {/* Phone mockups — 3 phones, fan arrangement on desktop */}
+          <div className="phones reveal rd2">
+            <div className="ph ph-2">
+              <div className="ph-scr">
+                <div className="ph-notch" />
+                <div className="ph-placeholder"><span>Summary</span></div>
+              </div>
+            </div>
+            <div className="ph ph-0">
+              <div className="ph-scr">
+                <div className="ph-notch" />
+                <div className="ph-placeholder"><span>Home</span></div>
+              </div>
+            </div>
+            <div className="ph ph-1">
+              <div className="ph-scr">
+                <div className="ph-notch" />
+                <div className="ph-placeholder"><span>Chapter</span></div>
+              </div>
             </div>
           </div>
 

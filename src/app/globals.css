@@ -25,6 +25,7 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
 @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
 @keyframes floatSlow{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @keyframes bookFloat{0%,100%{transform:rotate(-2.5deg) translateY(0)}50%{transform:rotate(-2.5deg) translateY(-6px)}}
+@keyframes bookDesktopFloat{0%,100%{transform:rotate(-1.5deg) translateY(0)}50%{transform:rotate(-1.5deg) translateY(-6px)}}
 @keyframes bookShadowFloat{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:.5;transform:scale(.96)}}
 
 /* ═══════════════ UTILITIES ═══════════════ */
@@ -45,7 +46,7 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
 :lang(en) .section-title{font-weight:500}
 :lang(en) .section-sub{color:var(--faint)}
 :lang(en) .section-sub-dk{color:#7A787E}
-:lang(en) .showcase-line{color:var(--muted);opacity:1}
+:lang(en) .showcase-line{color:var(--faint)}
 
 /* ═══════════════ NAV ═══════════════ */
 .nav{position:absolute;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 28px;transition:color .3s}
@@ -83,6 +84,8 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
 /* ── Book ── */
 .book{position:relative;z-index:1;opacity:0;transform:translateY(20px) rotate(-2.5deg) scale(.97);transition:opacity 1s ease-out,transform 1.2s cubic-bezier(.22,1,.36,1);margin-bottom:48px}
 .book.on{opacity:1;transform:translateY(0) rotate(-2.5deg) scale(1);animation:bookFloat 5s ease-in-out 1.5s infinite}
+.book-open{display:none}
+.book-closed{display:block}
 
 .book-cover{
   width:clamp(180px,26vw,240px);
@@ -136,24 +139,23 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
   padding:100px 32px 60px;text-align:center;position:relative;overflow:hidden;
   background:transparent;
 }
-.showcase-line{font-family:var(--font-cormorant),serif;font-size:clamp(19px,2.4vw,24px);font-weight:400;color:var(--text);line-height:1.7;margin-bottom:56px;opacity:.85}
+.showcase-line{font-family:var(--font-cormorant),serif;font-size:clamp(16px,1.9vw,19px);font-weight:300;color:var(--muted);line-height:1.7;margin-bottom:56px}
 
 /* Phone mockups */
 .phones{display:flex;justify-content:center;align-items:center;position:relative;z-index:1;min-height:460px}
 .ph{width:clamp(170px,20vw,220px);aspect-ratio:9/19.2;background:#1B1B1B;border-radius:clamp(24px,3vw,34px);padding:clamp(7px,.9vw,10px);position:absolute;transition:transform .7s cubic-bezier(.22,1,.36,1),opacity .7s cubic-bezier(.22,1,.36,1)}
 .ph-0{z-index:3;transform:translateX(0) scale(1);box-shadow:0 4px 16px rgba(0,0,0,.06),0 16px 48px rgba(0,0,0,.1),inset 0 0 0 .5px rgba(255,255,255,.04)}
 .ph-1{z-index:2;transform:translateX(clamp(100px,14vw,180px)) rotate(3deg) scale(.88);opacity:.6;box-shadow:0 4px 12px rgba(0,0,0,.05),0 12px 36px rgba(0,0,0,.07)}
-.ph-2{z-index:1;transform:translateX(clamp(-100px,-14vw,-180px)) rotate(-3deg) scale(.88);opacity:.6;box-shadow:0 4px 12px rgba(0,0,0,.05),0 12px 36px rgba(0,0,0,.07)}
+.ph-2{z-index:1;transform:translateX(clamp(-180px,-14vw,-100px)) rotate(-3deg) scale(.88);opacity:.6;box-shadow:0 4px 12px rgba(0,0,0,.05),0 12px 36px rgba(0,0,0,.07)}
 .phones:hover .ph-0{transform:translateX(0) scale(1.02)}
 .phones:hover .ph-1{transform:translateX(clamp(110px,15vw,195px)) rotate(4deg) scale(.88);opacity:.7}
-.phones:hover .ph-2{transform:translateX(clamp(-110px,-15vw,-195px)) rotate(-4deg) scale(.88);opacity:.7}
+.phones:hover .ph-2{transform:translateX(clamp(-195px,-15vw,-110px)) rotate(-4deg) scale(.88);opacity:.7}
 .ph-scr{width:100%;height:100%;border-radius:clamp(18px,2.2vw,26px);overflow:hidden;background:var(--bg);position:relative}
 .ph-notch{position:absolute;top:7px;left:50%;transform:translateX(-50%);width:60px;height:18px;background:#1B1B1B;border-radius:16px;z-index:10}
 
-/* Phone case placeholder */
-.phone-case-placeholder{position:relative;z-index:1;margin:60px auto 0;width:clamp(280px,40vw,480px);aspect-ratio:9/19;display:flex;align-items:center;justify-content:center}
-.phone-case-placeholder-inner{width:100%;height:100%;border-radius:clamp(24px,3vw,40px);border:2px dashed rgba(180,160,120,.4);background:rgba(180,160,120,.06);display:flex;align-items:center;justify-content:center}
-.phone-case-placeholder-inner span{color:rgba(180,160,120,.5);font-size:14px;letter-spacing:.05em}
+/* Phone screen placeholder (until real screenshots) */
+.ph-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg-light)}
+.ph-placeholder span{font-family:var(--font-cormorant),serif;font-size:11px;letter-spacing:.12em;color:var(--faint);opacity:.6}
 
 /* Screen contents */
 .s-home{padding:40px 12px 12px;height:100%;display:flex;flex-direction:column;overflow:hidden;position:relative}
@@ -358,14 +360,14 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
 :lang(en) .promise-desc{color:var(--faint)}
 /* Chinese typography tuning */
 :lang(zh-Hans) .hero-tag{letter-spacing:.06em;font-size:clamp(15px,1.8vw,17px)}
-:lang(zh-Hans) .showcase-line{letter-spacing:.04em;line-height:1.8;color:var(--muted);opacity:1}
+:lang(zh-Hans) .showcase-line{letter-spacing:.04em;line-height:1.8}
 :lang(zh-Hans) .chapters-line{letter-spacing:.04em}
 :lang(zh-Hans) .yoy-q{letter-spacing:.02em;font-style:normal;line-height:1.8}
 :lang(zh-Hans) .yoy-card-text{line-height:2;letter-spacing:.02em}
 :lang(zh-Hans) .ending-title{letter-spacing:.02em;line-height:1.5}
 :lang(zh-Hans) .promise-label{letter-spacing:.04em}
 :lang(zh-Hans) .promise-desc{letter-spacing:.02em;line-height:1.8}
-:lang(zh-Hans) .toc-name{letter-spacing:.06em}
+:lang(zh-Hans) .toc-name{letter-spacing:.06em;font-weight:400}
 :lang(zh-Hans) .toc-q{letter-spacing:.02em}
 
 /* ═══════════════ PRIVACY / PROSE ═══════════════ */
@@ -434,11 +436,200 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
   .book-cover{width:clamp(160px,42vw,200px)}
 }
 
+/* ═══════════════ DESKTOP OPTIMIZATIONS (≥1024px) ═══════════════ */
+@media(min-width:1024px){
+
+  /* ── 1. Hero — Open Book (centered, compact) ── */
+  .hero{padding:60px 48px 40px;min-height:100vh}
+  .hero::before{width:600px;height:500px}
+
+  .book-open{
+    display:flex;align-items:stretch;gap:0;
+    position:relative;
+  }
+  .book-closed{display:none}
+
+  .book{
+    margin-bottom:32px;
+    transform:translateY(16px) rotate(-1.5deg) scale(.97);
+    transition:opacity 1s ease-out,transform 1.2s cubic-bezier(.22,1,.36,1);
+  }
+  .book.on{
+    transform:translateY(0) rotate(-1.5deg) scale(1);
+    animation:bookDesktopFloat 6s ease-in-out 1.5s infinite;
+  }
+
+  /* Both pages — unified warm paper */
+  .book-page{
+    width:clamp(155px,14vw,205px);
+    aspect-ratio:3/4;
+    background:linear-gradient(170deg,#F0EBE3,#EBE5DC,#E6E0D6);
+    position:relative;overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05),0 16px 40px rgba(0,0,0,.04);
+  }
+  /* Subtle paper texture */
+  .book-page::after{content:'';position:absolute;inset:0;opacity:.03;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='bp'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23bp)'/%3E%3C/svg%3E");background-size:150px}
+
+  .book-page-left{border-radius:3px 0 0 3px}
+  .book-page-right{border-radius:0 3px 3px 0;overflow:visible}
+
+  /* Fold shadows near gutter */
+  .book-page-fold{position:absolute;top:0;bottom:0;width:28px;pointer-events:none;z-index:2}
+  .book-page-left .book-page-fold{right:0;background:linear-gradient(to left,rgba(0,0,0,.05),transparent)}
+  .book-page-right .book-page-fold{left:0;background:linear-gradient(to right,rgba(0,0,0,.06),transparent)}
+
+  /* Title page content */
+  .book-page-content{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    padding:18%;
+  }
+  .book-page-content::before{
+    content:'';position:absolute;
+    top:14%;left:14%;right:18%;bottom:14%;
+    border:.5px solid rgba(140,100,50,.16);pointer-events:none;
+  }
+  .book-page-content .book-year{font-family:var(--font-cormorant),serif;font-size:clamp(20px,2vw,26px);font-weight:300;letter-spacing:.15em;color:var(--gold);text-shadow:0 1px 1px rgba(0,0,0,.04)}
+  .book-page-content .book-rule{width:22px;height:.5px;background:var(--gold);opacity:.3}
+  .book-page-content .book-brand{font-family:var(--font-cormorant),serif;font-size:clamp(9px,1vw,12px);font-weight:400;letter-spacing:.25em;color:var(--gold);text-shadow:0 1px 1px rgba(0,0,0,.04)}
+
+  /* Right page — subtle ruled lines */
+  .book-page-lines{
+    position:absolute;top:16%;left:18%;right:14%;bottom:14%;
+    background:repeating-linear-gradient(to bottom,transparent 0px,transparent 18px,rgba(160,148,130,.1) 18px,rgba(160,148,130,.1) 19px);
+  }
+  .book-page-lines::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:rgba(160,148,130,.15)}
+  .book-page-lines::after{content:'';position:absolute;top:-8%;left:-5px;bottom:-8%;width:.5px;background:rgba(180,120,110,.1)}
+
+  /* Ribbon bookmark on right page */
+  .book-ribbon-open{
+    display:block;
+    position:absolute;top:-6px;right:28%;
+    width:6px;height:36px;z-index:4;
+    background:linear-gradient(180deg,#C07058,#A85040);
+  }
+  .book-ribbon-open::after{
+    content:'';position:absolute;bottom:0;left:0;width:100%;height:6px;
+    background:inherit;clip-path:polygon(0 0,100% 0,50% 100%);
+  }
+
+  /* Gutter */
+  .book-gutter{
+    width:4px;align-self:stretch;flex-shrink:0;
+    background:linear-gradient(90deg,#D0C8BC,#DBD3C7,#D0C8BC);
+    box-shadow:inset 1px 0 4px rgba(0,0,0,.06),inset -1px 0 4px rgba(0,0,0,.06);
+    position:relative;z-index:3;
+  }
+
+  /* Shadow */
+  .book-shadow{
+    position:absolute;bottom:-14px;left:5%;right:5%;height:24px;
+    background:radial-gradient(ellipse at 50% 0%,rgba(60,40,20,.09),transparent 68%);
+    filter:blur(8px);z-index:-1;
+  }
+
+  /* Tighter hero spacing */
+  .hero-title{font-size:clamp(48px,6vw,68px)}
+  .hero-tag{margin-top:8px}
+  .hero-cta{margin-top:32px}
+
+  /* ── 2. Showcase — Desktop layout ── */
+  .showcase{padding:120px 64px 80px}
+  .showcase-line{max-width:640px;margin-left:auto;margin-right:auto}
+  .phones{min-height:520px}
+  .ph{width:clamp(200px,17vw,240px)}
+  .chapters-line{font-size:clamp(16px,1.6vw,20px)}
+
+  /* ── 3. TOC — Wider, more breathing room ── */
+  .toc-section{padding:120px 48px 140px}
+  .toc-page{max-width:680px;padding:64px 60px}
+  .toc-row{padding:18px 0;gap:18px}
+  .toc-name{font-size:clamp(20px,2vw,24px)}
+  .toc-q{max-width:260px;font-size:clamp(15px,1.4vw,17px)}
+
+  /* ── 4. YOY — Stronger year-over-year contrast ── */
+  .yoy{padding:140px 48px}
+  .yoy-in{max-width:1000px}
+
+  /* Shelf — larger on desktop */
+  .shelf{margin-bottom:64px}
+  .shelf-book{width:clamp(48px,5vw,60px)}
+  .shelf-b1{height:clamp(110px,12vw,150px);opacity:.4}
+  .shelf-b2{height:clamp(130px,14vw,175px);opacity:.6}
+  .shelf-b3{height:clamp(145px,16vw,195px)}
+  .shelf-b4{height:clamp(120px,13vw,165px)}
+  .shelf-board{width:clamp(280px,42vw,400px);height:12px}
+
+  /* Cards — timeline narrative */
+  .yoy-cards{gap:24px;align-items:stretch}
+  .yoy-card{overflow:visible}
+  .yoy-card::before{display:none}
+
+
+  /* Progressive presence: past → present → future */
+  .yoy-card:nth-child(1){opacity:.35}
+  .yoy-card:nth-child(1):hover{opacity:.55}
+  .yoy-card:nth-child(2){opacity:.6}
+  .yoy-card:nth-child(2):hover{opacity:.78}
+  .yoy-card-current{
+    opacity:1!important;
+    box-shadow:0 2px 8px rgba(0,0,0,.2),0 12px 32px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.06),0 0 0 1px rgba(168,136,90,.2);
+  }
+  .yoy-card-pending{opacity:.35}
+  .yoy-card-pending:hover{opacity:.5}
+
+  /* Progressive year number color */
+  .yoy-card:nth-child(1) .yoy-card-year{color:var(--dark-muted)}
+  .yoy-card:nth-child(2) .yoy-card-year{color:var(--dark-text);opacity:.7}
+  /* current year already gold via .yoy-card-current .yoy-card-year */
+
+  /* Progressive rule opacity */
+  .yoy-card:nth-child(1) .yoy-card-rule{opacity:.12}
+  .yoy-card:nth-child(2) .yoy-card-rule{opacity:.2}
+
+  .yoy-card-year{font-size:clamp(32px,3.2vw,44px)}
+  .yoy-card-text{font-size:17px;line-height:2}
+  .yoy-q{font-size:clamp(26px,2.8vw,34px);margin-bottom:64px}
+  .yoy-q br{display:none}
+
+  /* ── 5. Promise — 2×2 grid on desktop ── */
+  .promise{padding:140px 48px;max-width:960px}
+  .promise-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:24px;
+    max-width:640px;margin:0 auto;
+  }
+  .promise-item{padding:36px 32px;display:block;text-align:center}
+  .promise-label{white-space:nowrap}
+  .promise-icon{margin:0 auto 20px}
+
+  /* ── 6. Ending — wider on desktop ── */
+  .ending{max-width:720px;padding:100px 48px 100px}
+  .ending-title{font-size:clamp(36px,4.5vw,52px)}
+
+  /* ── Nav — wider padding ── */
+  .nav{padding:20px 48px}
+
+  /* ── Footer — wider ── */
+  .site-footer{padding:100px 48px 60px}
+}
+
+/* Extra-wide desktop (≥1440px) */
+@media(min-width:1440px){
+  .book-page{width:215px}
+  .hero{padding:60px 80px 40px}
+  .yoy-in{max-width:1100px}
+  .toc-page{max-width:740px;padding:72px 72px}
+  .promise{max-width:1040px}
+  .promise-grid{max-width:800px;gap:28px}
+}
+
 /* ═══════════════ REDUCED MOTION ═══════════════ */
 @media(prefers-reduced-motion:reduce){
   .cta-btn::after{animation:none!important}
   .reveal{opacity:1!important;transform:none!important;transition:none!important}
   .book{opacity:1!important;transform:rotate(-2.5deg)!important;transition:none!important;animation:none!important}
+  @media(min-width:1024px){.book{transform:rotate(-1.5deg)!important}}
   .book-shadow{animation:none!important}
   .hero-title,.hero-tag,.hero-cta,.hero-scroll{opacity:1!important;transition:none!important}
   .hero-tag{opacity:.6!important}
