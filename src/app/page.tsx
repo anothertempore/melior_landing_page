@@ -112,59 +112,10 @@ export default function Home() {
           <h2 className="section-title reveal">{t("showcaseTitle")}</h2>
           <p className="showcase-line reveal">{t("showcaseLine")}</p>
 
-          <div className="phones reveal rd1" aria-hidden="true">
-            {/* Left — Chapter list */}
-            <div className="ph ph-2">
-              <div className="ph-scr"><div className="ph-notch" />
-                <div className="s-ch">
-                  <div className="s-ch-t">{t("sChT")}</div>
-                  <div className="s-ch-s">Highlights</div>
-                  <div className="s-qr"><span className="s-qd dn" /><span className="s-qt dn">{t("sQ1")}</span></div>
-                  <div className="s-qr"><span className="s-qd dn" /><span className="s-qt dn">{t("sQ2")}</span></div>
-                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t("sQ3")}</span></div>
-                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t("sQ4")}</span></div>
-                  <div className="s-qr"><span className="s-qd" /><span className="s-qt">{t("sQ5")}</span></div>
-                </div>
-              </div>
-            </div>
-            {/* Center — Home */}
-            <div className="ph ph-0">
-              <div className="ph-scr"><div className="ph-notch" />
-                <div className="s-home">
-                  <div className="s-ink s-ink-1" />
-                  <div className="s-ink s-ink-2" />
-                  <div className="s-yr">2025</div>
-                  <div className="s-sub" dangerouslySetInnerHTML={{ __html: t.raw("sSub") }} />
-                  <div className="s-card">
-                    <div className="s-lbl">{t("sLbl1")}</div>
-                    <div className="s-q">{t("sCardQ1")}</div>
-                    <div className="s-h">{t("sHint")}</div>
-                  </div>
-                  <div className="s-card s-card-2">
-                    <div className="s-lbl" style={{ color: "var(--ch2)" }}>{t("sLbl2")}</div>
-                    <div className="s-q">{t("sCardQ2")}</div>
-                    <div className="s-h">{t("sHint")}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Right — Summary */}
-            <div className="ph ph-1">
-              <div className="ph-scr"><div className="ph-notch" />
-                <div className="s-sum">
-                  <div className="s-sum-yr">2025</div>
-                  <div className="s-sum-lbl">{t("sSumLbl")}</div>
-                  <div className="s-sum-ln" />
-                  <div className="s-sum-ch">{t("sSumCh1")}</div>
-                  <div className="s-sum-a">{t("sSumA1")}</div>
-                  <div className="s-sum-ln" />
-                  <div className="s-sum-ch" style={{ color: "var(--ch2)" }}>{t("sSumCh2")}</div>
-                  <div className="s-sum-a">{t("sSumA2")}</div>
-                  <div className="s-sum-ln" />
-                  <div className="s-sum-ch" style={{ color: "var(--ch3)" }}>{t("sSumCh3")}</div>
-                  <div className="s-sum-a">{t("sSumA3")}</div>
-                </div>
-              </div>
+          {/* Phone case image placeholder */}
+          <div className="phone-case-placeholder reveal rd2">
+            <div className="phone-case-placeholder-inner">
+              <span>Phone Case Image</span>
             </div>
           </div>
 
