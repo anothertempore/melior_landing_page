@@ -168,6 +168,13 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Phone case image placeholder */}
+          <div className="phone-case-placeholder reveal rd2">
+            <div className="phone-case-placeholder-inner">
+              <span>Phone Case Image</span>
+            </div>
+          </div>
+
           <p className="chapters-line reveal rd2">{t("chaptersLine")}</p>
         </section>
 
