@@ -82,7 +82,7 @@ export default function Home() {
               <div className="book-cover">
                 <div className="book-spine" />
                 <div className="book-inner">
-                  <span className="book-year">2025</span>
+                  <span className="book-year">2026</span>
                   <span className="book-rule" />
                   <span className="book-brand">Melior</span>
                 </div>
@@ -95,7 +95,7 @@ export default function Home() {
               <div className="book-page book-page-left">
                 <div className="book-page-fold" />
                 <div className="book-page-content">
-                  <span className="book-year">2025</span>
+                  <span className="book-year">2026</span>
                   <span className="book-rule" />
                   <span className="book-brand">Melior</span>
                 </div>
