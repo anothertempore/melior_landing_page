@@ -298,7 +298,7 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
 .yoy-card-current{opacity:1!important;border-color:rgba(168,136,90,.25);box-shadow:0 2px 8px rgba(0,0,0,.2),0 8px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(168,136,90,.12)}
 .yoy-card-current .yoy-card-year{color:var(--gold-light)}
 .yoy-card-current .yoy-card-rule{background:linear-gradient(90deg,var(--gold-light),transparent);opacity:.5}
-.yoy-card-pending{opacity:.35;border-style:dashed;background:transparent;box-shadow:none}
+.yoy-card-pending{opacity:.35;border:1px dashed rgba(255,255,255,.15);background:transparent;box-shadow:none}
 .yoy-card-pending:hover{opacity:.5;transform:translateY(-4px)}
 .yoy-pending{font-family:var(--font-cormorant),serif;font-size:15px;font-style:italic;color:var(--dark-muted)}
 
