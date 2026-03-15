@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Feather, FileText, ShieldCheck, Cloud } from "lucide-react";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -14,6 +14,8 @@ const APPLE_ICON = (
 
 export default function Home() {
   const t = useTranslations("home");
+  const locale = useLocale();
+  const isZh = locale === "zh";
   const navRef = useRef<HTMLElement>(null);
   const yoyRef = useRef<HTMLDivElement>(null);
   const bookRef = useRef<HTMLDivElement>(null);
@@ -137,19 +139,19 @@ export default function Home() {
             <div className="ph ph-2">
               <div className="ph-scr">
                 <div className="ph-notch" />
-                <div className="ph-placeholder"><span>Summary</span></div>
+                <img src={isZh ? "/screen-summary-zh.png" : "/screen-summary.png"} alt="Summary screen" className="ph-img" />
               </div>
             </div>
             <div className="ph ph-0">
               <div className="ph-scr">
                 <div className="ph-notch" />
-                <div className="ph-placeholder"><span>Home</span></div>
+                <img src={isZh ? "/screen-home-zh.png" : "/screen-home.png"} alt="Home screen" className="ph-img" />
               </div>
             </div>
             <div className="ph ph-1">
               <div className="ph-scr">
                 <div className="ph-notch" />
-                <div className="ph-placeholder"><span>Chapter</span></div>
+                <img src={isZh ? "/screen-chapter-zh.png" : "/screen-chapter.png"} alt="Chapter screen" className="ph-img" />
               </div>
             </div>
           </div>
