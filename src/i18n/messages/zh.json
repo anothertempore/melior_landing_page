@@ -63,6 +63,13 @@
     "ariaYoy": "年度回顾",
     "ariaDownload": "下载"
   },
+  "download": {
+    "instruction": "微信内无法直接打开 App Store 链接。",
+    "step1": "点击右上角 ···",
+    "step2": "选择「在浏览器中打开」",
+    "step3": "页面会自动跳转到 App Store",
+    "fallback": "请在 Safari 中打开此页面以下载 Melior。"
+  },
   "footer": {
     "privacy": "隐私政策",
     "support": "帮助",

@@ -63,6 +63,13 @@
     "ariaYoy": "Year over Year",
     "ariaDownload": "Download"
   },
+  "download": {
+    "instruction": "This browser doesn't support direct App Store links.",
+    "step1": "Tap ··· in the top-right corner",
+    "step2": "Choose \"Open in Browser\"",
+    "step3": "The download will start automatically",
+    "fallback": "Open this page in Safari to download Melior."
+  },
   "footer": {
     "privacy": "Privacy",
     "support": "Support",
