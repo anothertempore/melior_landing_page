@@ -36,7 +36,6 @@ export default async function DownloadPage() {
       </svg>
 
       <h1 className="dl-brand">Melior</h1>
-      <p className="dl-instruction">{t("instruction")}</p>
       <ol className="dl-steps">
         <li>{t("step1")}</li>
         <li>{t("step2")}</li>

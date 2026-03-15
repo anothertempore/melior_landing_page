@@ -409,13 +409,12 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
 .dl-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);padding:48px 32px;text-align:center;position:relative}
 .dl-arrow{position:absolute;top:16px;right:16px;width:100px;height:100px;opacity:.5}
 .dl-brand{font-family:var(--font-cormorant),serif;font-size:clamp(36px,7vw,48px);font-weight:300;letter-spacing:.06em;color:var(--text);margin-bottom:32px}
-.dl-instruction{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:28px;max-width:320px}
 .dl-steps{list-style:none;padding:0;margin:0 0 36px;text-align:left;max-width:280px;counter-reset:dl-step}
 .dl-steps li{font-size:15px;color:var(--text);line-height:1.8;padding:8px 0;border-bottom:.5px solid var(--stroke);counter-increment:dl-step;display:flex;align-items:baseline;gap:12px}
 .dl-steps li::before{content:counter(dl-step);font-family:var(--font-cormorant),serif;font-size:18px;font-weight:400;color:var(--gold);flex-shrink:0;min-width:18px;text-align:center}
 .dl-steps li:last-child{border-bottom:none}
 .dl-fallback{font-size:14px;color:var(--faint);line-height:1.8;max-width:320px;margin-top:8px}
-:lang(zh-Hans) .dl-instruction,:lang(zh-Hans) .dl-steps li,:lang(zh-Hans) .dl-fallback{font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif}
+:lang(zh-Hans) .dl-steps li,:lang(zh-Hans) .dl-fallback{font-family:-apple-system,'PingFang SC','Helvetica Neue',sans-serif}
 
 /* ═══════════════ RESPONSIVE ═══════════════ */
 @media(max-width:700px){
