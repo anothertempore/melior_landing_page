@@ -123,7 +123,7 @@ export default function Home() {
           <p className="hero-tag" ref={heroTagRef}>{t("heroTag")}</p>
 
           <div className="hero-cta" ref={heroCtaRef}>
-            <a href="#" className="cta-btn cta-btn-ring">
+            <a href="https://apps.apple.com/app/melior/id6759236940" className="cta-btn cta-btn-ring">
               {APPLE_ICON}
               <span>{t("heroCta")}</span>
             </a>
@@ -302,7 +302,7 @@ export default function Home() {
         <section className="ending" aria-label={t("ariaDownload")}>
           <h2 className="ending-title reveal" dangerouslySetInnerHTML={{ __html: t.raw("endingTitle") }} />
           <div className="ending-cta reveal">
-            <a href="#" className="cta-btn">
+            <a href="https://apps.apple.com/app/melior/id6759236940" className="cta-btn">
               {APPLE_ICON}
               <span>{t("endingCta")}</span>
             </a>

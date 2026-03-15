@@ -48,6 +48,9 @@ export default async function RootLayout({
 
   return (
     <html lang={htmlLang} className={cormorant.variable}>
+      <head>
+        <meta name="apple-itunes-app" content="app-id=6759236940" />
+      </head>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
