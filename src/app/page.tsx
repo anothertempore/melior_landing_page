@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Feather, FileText, ShieldCheck, Cloud } from "lucide-react";
 import Nav from "@/components/Nav";
@@ -16,6 +16,13 @@ export default function Home() {
   const t = useTranslations("home");
   const locale = useLocale();
   const isZh = locale === "zh";
+  const [phoneIdx, setPhoneIdx] = useState(0); // 0=Home, 1=Chapter, 2=Summary
+  const touchRef = useRef<number>(0);
+  const onPhoneSwipe = useCallback((e: React.TouchEvent) => {
+    if (e.type === "touchstart") { touchRef.current = e.touches[0].clientX; return; }
+    const dx = e.changedTouches[0].clientX - touchRef.current;
+    if (Math.abs(dx) > 40) setPhoneIdx(p => (p + (dx < 0 ? 1 : 2)) % 3);
+  }, []);
   const navRef = useRef<HTMLElement>(null);
   const yoyRef = useRef<HTMLDivElement>(null);
   const bookRef = useRef<HTMLDivElement>(null);
@@ -134,26 +141,33 @@ export default function Home() {
           <h2 className="section-title reveal">{t("showcaseTitle")}</h2>
           <p className="showcase-line reveal">{t("showcaseLine")}</p>
 
-          {/* Phone mockups — 3 phones, fan arrangement on desktop */}
-          <div className="phones reveal rd2">
-            <div className="ph ph-2">
+          {/* Phone mockups — 3 phones, fan arrangement on desktop, carousel on mobile */}
+          <div className="phones reveal rd2" data-active={phoneIdx}
+            onTouchStart={onPhoneSwipe} onTouchEnd={onPhoneSwipe}>
+            <div className="ph ph-2" onClick={() => setPhoneIdx(2)}>
               <div className="ph-scr">
                 <div className="ph-notch" />
                 <img src={isZh ? "/screen-summary-zh.png" : "/screen-summary.png"} alt="Summary screen" className="ph-img" />
               </div>
             </div>
-            <div className="ph ph-0">
+            <div className="ph ph-0" onClick={() => setPhoneIdx(0)}>
               <div className="ph-scr">
                 <div className="ph-notch" />
                 <img src={isZh ? "/screen-home-zh.png" : "/screen-home.png"} alt="Home screen" className="ph-img" />
               </div>
             </div>
-            <div className="ph ph-1">
+            <div className="ph ph-1" onClick={() => setPhoneIdx(1)}>
               <div className="ph-scr">
                 <div className="ph-notch" />
                 <img src={isZh ? "/screen-chapter-zh.png" : "/screen-chapter.png"} alt="Chapter screen" className="ph-img" />
               </div>
             </div>
+          </div>
+          <div className="phone-dots">
+            {[2,0,1].map(i => (
+              <button key={i} className={`phone-dot${phoneIdx === i ? " active" : ""}`}
+                onClick={() => setPhoneIdx(i)} aria-label={`Screen ${i+1}`} />
+            ))}
           </div>
 
           <p className="chapters-line reveal rd2">{t("chaptersLine")}</p>
