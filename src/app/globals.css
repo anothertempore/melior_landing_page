@@ -407,10 +407,11 @@ body::after{content:'';position:fixed;inset:0;opacity:.018;pointer-events:none;z
 
 /* ═══════════════ RESPONSIVE ═══════════════ */
 @media(max-width:700px){
-  .ph-1,.ph-2{display:none}
-  .ph-0{position:relative}
-  .phones{min-height:auto}
-  .ph{width:220px}
+  .phones{min-height:360px}
+  .ph{width:clamp(150px,40vw,180px)}
+  .ph-0{transform:translateX(0) scale(1)}
+  .ph-1{transform:translateX(clamp(70px,18vw,100px)) rotate(3deg) scale(.88)}
+  .ph-2{transform:translateX(clamp(-100px,-18vw,-70px)) rotate(-3deg) scale(.88)}
   .yoy-cards{grid-template-columns:1fr 1fr;gap:12px}
   .shelf-book{width:clamp(30px,8vw,40px)}
   .shelf-board{width:clamp(160px,55vw,260px)}
