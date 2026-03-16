@@ -37,7 +37,7 @@ const faqEn: FaqItem[] = [
   },
   {
     q: "What devices does Melior support?",
-    a: "Melior is available for iPhone running iOS 17.0 or later.",
+    a: "Melior is available for iPhone running iOS 18.6 or later.",
   },
   {
     q: "Can I export my reflections?",
@@ -72,7 +72,7 @@ const faqZh: FaqItem[] = [
   },
   {
     q: "Melior 支持哪些设备？",
-    a: "Melior 适用于运行 iOS 17.0 或更高版本的 iPhone。",
+    a: "Melior 适用于运行 iOS 18.6 或更高版本的 iPhone。",
   },
   {
     q: "可以导出我的回忆吗？",
