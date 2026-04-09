@@ -17,6 +17,8 @@ export default function Footer({ showLinks = false }: FooterProps) {
 
       {showLinks && (
         <nav className="footer-links">
+          <a href="/changelog">{t("changelog")}</a>
+          <span className="footer-dot" />
           <a href="/privacy">{t("privacy")}</a>
           <span className="footer-dot" />
           <a href="/support">{t("support")}</a>

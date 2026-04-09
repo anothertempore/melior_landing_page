@@ -70,6 +70,7 @@
     "fallback": "请在 Safari 中打开此页面以下载 Melior。"
   },
   "footer": {
+    "changelog": "更新记录",
     "privacy": "隐私政策",
     "support": "帮助",
     "contact": "联系"
